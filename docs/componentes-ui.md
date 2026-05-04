@@ -501,13 +501,314 @@ animation: shimmer 2s infinite;
 
 ---
 
-## ✅ CHECKLIST COMPONENTES
+## 📊 ANÁLISIS DE COMPONENTES EN MAQUETAS
 
-- [ ] Button (4 variantes, 3 tamaños)
+### Proporción de Uso Global
+
+**Total de elementos UI analizados:** 672 elementos en 12 maquetas
+
+| Componente        | Uso           | Promedio     | Maquetas     |
+| ----------------- | ------------- | ------------ | ------------ |
+| 🔘 **Buttons**    | 65 elementos  | 5.4/maqueta  | 12/12 (100%) |
+| 📱 **Navigation** | 116 elementos | 14.5/maqueta | 8/12 (67%)   |
+| 🎴 **Cards**      | 46 elementos  | 7.7/maqueta  | 6/12 (50%)   |
+| 📝 **Inputs**     | 34 elementos  | 3.4/maqueta  | 10/12 (83%)  |
+| 📋 **Forms**      | 4 conjuntos   | 1/formulario | 4/12 (33%)   |
+| 🏷️ **Headers**    | 20 elementos  | 1.8/maqueta  | 11/12 (92%)  |
+| 🔖 **Badges**     | 5 elementos   | 5/maqueta    | 1/12 (8%)    |
+| 📊 **Tables**     | 5 tablas      | 1.7/maqueta  | 3/12 (25%)   |
+| 🔲 **Grids**      | 6 patrones    | 6/maqueta    | 1/12 (8%)    |
+
+---
+
+## 🔧 COMPOSICIÓN POR MAQUETA
+
+### **01-login.html**
+
+- ✅ Layout simple centrado
+- ✅ 1 Form con 2 Inputs
+- ✅ 1 Button primario
+- ✅ Link "forgot password"
+
+**Componentes críticos**: Form, Input, Button, Link
+
+---
+
+### **02-dashboard.html**
+
+- ✅ Header + Sidebar (desktop) + NavBar (mobile)
+- ✅ 4 MetricCards con valores + trend
+- ✅ 1 FinanceChart placeholder
+- ✅ Lista de trabajos recientes
+- ✅ Grid de acceso rápido (4 botones)
+
+**Componentes críticos**: Header, Sidebar, NavBar, MetricCard, Button, Card
+
+**Patrón**: `Layout > Header + Sidebar > [MetricCard, FinanceChart, List]`
+
+---
+
+### **03-trabajos-listado.html**
+
+- ✅ Header + Sidebar + NavBar
+- ✅ Toolbar (búsqueda + filtros con tabs)
+- ✅ Grid de WorkCards (gallery)
+- ✅ Cada card: placa, estado (badge), cliente, precio, acciones
+
+**Componentes críticos**: Header, Sidebar, NavBar, Input (search), Tabs, Card, Badge, Button
+
+**Patrón**: `Layout > Header + Toolbar > Grid[WorkCard with Badge + Actions]`
+
+---
+
+### **04-trabajos-crear.html**
+
+- ✅ Form multi-sección
+- ✅ Secciones: Cliente, Vehículo, Trabajo, Fotos, Notas
+- ✅ Multi-select para tipos de trabajo
+- ✅ PhotoUpload area (drag-drop)
+- ✅ Fixed action bar (Cancel/Create buttons)
+
+**Componentes críticos**: Form, Input, Select, Textarea, PhotoUpload, Button
+
+**Patrón**: `Form > [FormSection > FormGroup > Input] > PhotoUpload > ActionBar[Button]`
+
+---
+
+### **05-finanzas.html**
+
+- ✅ Header + NavBar
+- ✅ Summary cards (Ingresos, Gastos, Ganancia)
+- ✅ Tabs (Ingresos, Gastos, Resumen)
+- ✅ Tables con transacciones
+- ✅ Toolbar para buscar/filtrar
+
+**Componentes críticos**: Header, NavBar, SummaryCard, Tabs, Table, Input, Button
+
+**Patrón**: `Layout > Header > SummaryCards + Tabs > Table`
+
+---
+
+### **06-inventario.html**
+
+- ✅ Header + Sidebar + NavBar
+- ✅ StockAlert section (resaltado)
+- ✅ Table de productos
+- ✅ Cada fila: nombre, categoría, stock (badge), precio, acciones
+
+**Componentes críticos**: Header, Sidebar, NavBar, Alert, Table, Badge, Button
+
+**Patrón**: `Layout > Header + Alert > Table[Badge + Actions]`
+
+---
+
+### **07-empleados.html**
+
+- ✅ Header + Sidebar + NavBar
+- ✅ Toolbar (search + new button)
+- ✅ Grid de EmployeeCards
+- ✅ Cada card: avatar, nombre, rol, stats, botones
+
+**Componentes críticos**: Header, Sidebar, NavBar, Input, Grid, Card, Button
+
+**Patrón**: `Layout > Header + Toolbar > Grid[EmployeeCard + Actions]`
+
+---
+
+### **08-reportes.html**
+
+- ✅ Header + Sidebar + NavBar
+- ✅ Date range selector + filter buttons
+- ✅ Summary stats (4 cards)
+- ✅ Charts placeholders (2)
+- ✅ Tables de top employees + top services
+
+**Componentes críticos**: Header, Sidebar, NavBar, DatePicker, Button, Card, Chart, Table
+
+**Patrón**: `Layout > Header + Toolbar > Stats + Charts > Tables`
+
+---
+
+### **09-ajustes.html**
+
+- ✅ Header + Sidebar menu (horizontal en mobile)
+- ✅ Menu items con icons
+- ✅ Form sections (Taller, Comisiones, Integraciones, Seguridad, Respaldo)
+- ✅ Nested forms con inputs, selects, toggles
+
+**Componentes críticos**: Header, SidebarMenu, Form, Input, Select, Toggle, Button
+
+**Patrón**: `Layout > Header + SidebarMenu > [FormSection > Inputs]`
+
+---
+
+### **10-trabajo-detalle.html**
+
+- ✅ Header con estado badge
+- ✅ Cards: Cliente, Vehículo, Trabajo, Fotos, Team assignment
+- ✅ Timeline de cambios
+- ✅ Action buttons (Edit, Delete, Print)
+
+**Componentes críticos**: Header, Card, Badge, PhotoGallery, Timeline, Button
+
+**Patrón**: `Layout > Header[Badge] > Grid[Card] > PhotoGallery + Timeline`
+
+---
+
+### **11-crear-ingreso.html**
+
+- ✅ Form simple (1 sección)
+- ✅ Campos: tipo ingreso (radio), monto, fecha, método pago
+- ✅ Campos condicionales según selección
+- ✅ Fixed action bar
+
+**Componentes críticos**: Form, Input, Select, Radio, Textarea, Button
+
+**Patrón**: `Form > FormGroup > [Input + ConditionalFields] > ActionBar[Button]`
+
+---
+
+### **12-crear-gasto.html**
+
+- ✅ Form simple (similar a ingreso)
+- ✅ Campos: concepto, monto, fecha, categoría
+- ✅ Opción recurrencia + número comprobante
+- ✅ Fixed action bar
+
+**Componentes críticos**: Form, Input, Select, Checkbox, Button
+
+**Patrón**: `Form > FormGroup > [Input + Checkbox] > ActionBar[Button]`
+
+---
+
+## 🎯 JERARQUÍA DE COMPONENTES
+
+**Nivel 0 (Primitivos):**
+
+- Text, Icon, Spacer
+
+**Nivel 1 (Atómicos):**
+
+- Button, Badge, Input, Select, Checkbox, Radio, Textarea
+
+**Nivel 2 (Moleculares):**
+
+- Form, FormGroup, FormSection, Card, Header, NavBar, Sidebar
+
+**Nivel 3 (Organismos):**
+
+- Layout, Modal, Toast, DataTable, Dashboard, Form (completo)
+
+**Nivel 4 (Templates/Páginas):**
+
+- LoginPage, DashboardPage, WorkListPage, etc. (las 12 maquetas)
+
+---
+
+## 🚀 GUÍA DE IMPLEMENTACIÓN RÁPIDA
+
+### 1. Setup inicial React + Tailwind
+
+```bash
+npm create vite@latest pintumaster -- --template react-ts
+cd pintumaster
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+### 2. Crear estructura de componentes
+
+```
+src/
+├── components/
+│   ├── primitives/        # Button, Badge, Input...
+│   ├── molecules/         # Form, Card, Header...
+│   ├── organisms/         # Layout, Modal, DataTable...
+│   └── pages/             # Página completas
+├── hooks/                 # useForm, useData...
+├── store/                 # Zustand stores
+├── styles/                # Tailwind config
+└── types/                 # TypeScript interfaces
+```
+
+### 3. Prioridad de componentes a implementar
+
+1. **Semana 1**: Button, Badge, Input, Card, Form → **Login page**
+2. **Semana 2**: Header, Sidebar, NavBar, Layout → **Dashboard page**
+3. **Semana 3**: DataTable, Modal, Toast, DatePicker → **Data pages**
+4. **Semana 4**: Charts, PhotoUpload, Timeline → **Detail pages**
+
+---
+
+## ✅ CHECKLIST IMPLEMENTACIÓN COMPONENTES
+
+### Primitivos
+
+- [ ] Button (4 variantes × 3 tamaños)
 - [ ] Badge (6 variantes)
-- [ ] Card (hover, shadow)
-- [ ] Input (error, label, icon)
-- [ ] Select (placeholder, disabled)
+- [ ] Card (hover, shadow, clickable)
+- [ ] Input (text, email, password, number)
+- [ ] Select (custom dropdown)
+- [ ] Checkbox, Radio, Toggle
+- [ ] Textarea (resizable)
+- [ ] Link, Icon, Spacer
+
+### Moleculares
+
+- [ ] Form, FormGroup, FormSection
+- [ ] Header (responsive)
+- [ ] Sidebar (desktop collapsible)
+- [ ] NavBar (mobile bottom)
+- [ ] Toolbar (search + filters)
+- [ ] Tabs (horizontal)
+- [ ] Pagination
+- [ ] Breadcrumb
+
+### Organismos
+
+- [ ] Layout (combina Header + Sidebar + NavBar)
+- [ ] Modal (sm, md, lg)
+- [ ] Toast / Alert (tipos: success, error, warning)
+- [ ] DataTable (sorting, pagination)
+- [ ] FinanceChart (recharts integration)
+- [ ] PhotoGallery, PhotoUpload
+- [ ] Timeline
+- [ ] DateRangePicker
+
+### Páginas (Templates)
+
+- [ ] LoginPage
+- [ ] DashboardPage
+- [ ] WorkListPage, WorkDetailPage, WorkCreatePage
+- [ ] FinancePage
+- [ ] InventoryPage
+- [ ] EmployeesPage
+- [ ] ReportsPage
+- [ ] SettingsPage
+
+---
+
+## 📚 REFERENCIAS EXTERNAS
+
+- **Tailwind CSS**: https://tailwindcss.com/docs
+- **React Hook Form**: https://react-hook-form.com/
+- **React Query**: https://tanstack.com/query/latest
+- **Recharts**: https://recharts.org/
+- **Radix UI** (headless components): https://www.radix-ui.com/
+
+---
+
+## ✅ ESTADO DE DOCUMENTACIÓN
+
+- ✅ Componentes base especificados
+- ✅ Componentes por módulo documentados
+- ✅ Análisis de maquetas completado
+- ✅ Jerarquía de componentes definida
+- ✅ Guía de implementación creada
+- ✅ Checklist de implementación generado
+
+**Próximo paso**: Implementación en Phase 2 (React + TypeScript)
+
 - [ ] Modal (sm/md/lg, close)
 - [ ] Toast (4 tipos, auto-close)
 - [ ] Skeleton (shimmer)
