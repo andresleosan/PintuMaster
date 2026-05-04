@@ -10,24 +10,25 @@ Este directorio contiene todas las maquetas **HTML + CSS puro** (SIN JavaScript 
 
 ## 📋 Índice de Maquetas
 
-| # | Archivo | Vista | Descripción |
-|----|---------|-------|-------------|
-| 01 | `01-login.html` | Login | Pantalla de autenticación - email + contraseña |
-| 02 | `02-dashboard.html` | Dashboard | Panel principal con métricas y accesos rápidos (desktop + mobile) |
-| 03 | `03-trabajos-listado.html` | Trabajos - Listado | Galería de trabajos con filtros y estados |
-| 04 | `04-trabajos-crear.html` | Trabajos - Crear | Formulario para crear nuevo trabajo (cliente, vehículo, detalles) |
-| 05 | `05-finanzas.html` | Finanzas | Dashboard financiero con ingresos, gastos y resumen |
-| 06 | `06-inventario.html` | Inventario | Listado de productos con alertas de stock bajo |
-| 07 | `07-empleados.html` | Empleados | Galería de empleados con estadísticas |
-| 08 | `08-reportes.html` | Reportes | Análisis con gráficos, tablas y métricas |
-| 09 | `09-ajustes.html` | Ajustes | Configuración de taller, comisiones, integraciones, seguridad |
-| 10 | `10-trabajo-detalle.html` | Trabajos - Detalle | Vista completa de un trabajo específico |
-| 11 | `11-crear-ingreso.html` | Finanzas - Nuevo Ingreso | Formulario para registrar pago de cliente |
-| 12 | `12-crear-gasto.html` | Finanzas - Nuevo Gasto | Formulario para registrar gasto |
+| #   | Archivo                    | Vista                    | Descripción                                                       |
+| --- | -------------------------- | ------------------------ | ----------------------------------------------------------------- |
+| 01  | `01-login.html`            | Login                    | Pantalla de autenticación - email + contraseña                    |
+| 02  | `02-dashboard.html`        | Dashboard                | Panel principal con métricas y accesos rápidos (desktop + mobile) |
+| 03  | `03-trabajos-listado.html` | Trabajos - Listado       | Galería de trabajos con filtros y estados                         |
+| 04  | `04-trabajos-crear.html`   | Trabajos - Crear         | Formulario para crear nuevo trabajo (cliente, vehículo, detalles) |
+| 05  | `05-finanzas.html`         | Finanzas                 | Dashboard financiero con ingresos, gastos y resumen               |
+| 06  | `06-inventario.html`       | Inventario               | Listado de productos con alertas de stock bajo                    |
+| 07  | `07-empleados.html`        | Empleados                | Galería de empleados con estadísticas                             |
+| 08  | `08-reportes.html`         | Reportes                 | Análisis con gráficos, tablas y métricas                          |
+| 09  | `09-ajustes.html`          | Ajustes                  | Configuración de taller, comisiones, integraciones, seguridad     |
+| 10  | `10-trabajo-detalle.html`  | Trabajos - Detalle       | Vista completa de un trabajo específico                           |
+| 11  | `11-crear-ingreso.html`    | Finanzas - Nuevo Ingreso | Formulario para registrar pago de cliente                         |
+| 12  | `12-crear-gasto.html`      | Finanzas - Nuevo Gasto   | Formulario para registrar gasto                                   |
 
 ## 🎨 Características Implementadas
 
 ### Diseño Visual
+
 - ✅ Paleta de colores especificada en `sistema-de-diseno.md`
   - Rojo principal: #CC0000
   - Negro fondo: #1A1A1A
@@ -37,6 +38,7 @@ Este directorio contiene todas las maquetas **HTML + CSS puro** (SIN JavaScript 
 - ✅ Bordes y sombras: Suaves y consistentes
 
 ### Componentes UI
+
 - ✅ Botones: 4 variantes (primary, secondary, danger, ghost)
 - ✅ Formularios: Inputs, selects, textareas con validación visual
 - ✅ Cards: Métricas, productos, empleados con efectos hover
@@ -46,12 +48,14 @@ Este directorio contiene todas las maquetas **HTML + CSS puro** (SIN JavaScript 
 - ✅ Modales: Estructura base (no interactivos en HTML)
 
 ### Navegación
+
 - ✅ **Desktop**: Sidebar fijo (220px, #1A1A1A) en la izquierda
 - ✅ **Mobile**: Navbar fija en la parte inferior (64px)
 - ✅ Breadcrumbs y botones de retroceso
 - ✅ Header consistente en todas las vistas
 
 ### Responsividad
+
 - ✅ Mobile First: Puntos de quiebre en 320px, 375px, 425px, 768px, 1024px
 - ✅ Grillas fluidas con `auto-fit` y `minmax()`
 - ✅ Texto escalable (mínimo 14px en móvil)
@@ -79,6 +83,7 @@ max-width: 2560px  /* 4K Ultra-wide */
 ## 🚀 Cómo Usar Estas Maquetas
 
 ### 1. Visualizar en Navegador
+
 ```bash
 # Simplemente abre cualquier .html en tu navegador
 # No requiere servidor - son HTML + CSS puro
@@ -86,13 +91,15 @@ open 01-login.html
 ```
 
 ### 2. Navegación Entre Vistas
+
 Aunque están desconectadas, puedes seguir este flujo manual:
 
 **Flujo de Usuario Típico:**
+
 ```
-Login (01) 
+Login (01)
   ↓
-Dashboard (02) 
+Dashboard (02)
   ↓
 Trabajos Listado (03) → Crear (04) → Detalle (10)
        ↓
@@ -108,7 +115,9 @@ Ajustes (09)
 ```
 
 ### 3. Validar Responsividad
+
 **En Chrome DevTools:**
+
 1. Abre la maqueta en Chrome
 2. Presiona `F12` para abrir DevTools
 3. Haz clic en el icono de dispositivo 📱 (Toggle device toolbar)
@@ -119,6 +128,7 @@ Ajustes (09)
    - iPad Pro (1024x1366)
 
 **Verificar:**
+
 - [ ] No hay overflow horizontal
 - [ ] Botones >= 48px × 48px
 - [ ] Texto >= 14px
@@ -158,6 +168,7 @@ Estas maquetas serán validadas en **Subfase 1.4 (Validación Responsive)** por:
 ## 📝 Notas Importantes
 
 ### Lo Que NO Está Implementado
+
 - ❌ Funcionalidad JavaScript (excepto interactividad CSS)
 - ❌ Conexión a Firebase
 - ❌ Autenticación real
@@ -166,6 +177,7 @@ Estas maquetas serán validadas en **Subfase 1.4 (Validación Responsive)** por:
 - ❌ Validación de formularios (except visual)
 
 ### Lo Que Está Implementado
+
 - ✅ Layout estructura completa
 - ✅ Diseño visual al 100%
 - ✅ Responsive design
@@ -177,6 +189,7 @@ Estas maquetas serán validadas en **Subfase 1.4 (Validación Responsive)** por:
 ## 🔄 Siguiente Fase: Phase 1.5
 
 Después de validación (Phase 1.4), estas maquetas serán:
+
 1. Analizadas para extraer componentes reutilizables
 2. Documentadas en `docs/componentes-ui.md` versión final
 3. Convertidas a componentes React en **Phase 2**

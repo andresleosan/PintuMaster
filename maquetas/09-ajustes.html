@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajustes - PintuMaster</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
+        color: #1a1a1a;
+      }
+
+      .header {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        gap: 24px;
+        padding: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 120px;
+      }
+
+      .sidebar-menu {
+        width: 200px;
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        height: fit-content;
+        position: sticky;
+        top: 80px;
+      }
+
+      .menu-item {
+        padding: 16px;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 500;
+      }
+
+      .menu-item:hover {
+        background: #f5f5f5;
+      }
+
+      .menu-item.active {
+        background: #cc0000;
+        color: #ffffff;
+        border-left: 4px solid #cc0000;
+      }
+
+      .menu-icon {
+        font-size: 18px;
+      }
+
+      .main-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      .section {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      .section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #cc0000;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #1a1a1a;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="url"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #cc0000;
+        box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: #cc0000;
+        color: #ffffff;
+      }
+
+      .btn-primary:hover {
+        background: #aa0000;
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        color: #1a1a1a;
+        border: 1px solid #ddd;
+      }
+
+      .btn-secondary:hover {
+        border-color: #cc0000;
+      }
+
+      .btn-danger {
+        background: #ffebee;
+        color: #f44336;
+      }
+
+      .btn-danger:hover {
+        background: #ffcdd2;
+      }
+
+      .toggle-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .toggle {
+        width: 48px;
+        height: 28px;
+        background: #ddd;
+        border-radius: 14px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s;
+      }
+
+      .toggle.active {
+        background: #cc0000;
+      }
+
+      .toggle-thumb {
+        width: 24px;
+        height: 24px;
+        background: #ffffff;
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: all 0.2s;
+      }
+
+      .toggle.active .toggle-thumb {
+        left: 22px;
+      }
+
+      .help-text {
+        font-size: 12px;
+        color: #999;
+        margin-top: 4px;
+      }
+
+      .danger-zone {
+        background: #ffebee;
+        border: 1px solid #f44336;
+        border-radius: 6px;
+        padding: 16px;
+        margin-top: 24px;
+      }
+
+      .danger-title {
+        color: #f44336;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: #ffffff;
+        border-top: 1px solid #ddd;
+        display: flex;
+        z-index: 200;
+      }
+
+      .navbar-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .navbar-item.active {
+        color: #cc0000;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .sidebar-menu {
+          width: 100%;
+          display: flex;
+          overflow-x: auto;
+          position: static;
+        }
+
+        .menu-item {
+          white-space: nowrap;
+          flex: 1;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1 style="font-size: 18px; font-weight: 600">Ajustes</h1>
+      <div style="width: 40px"></div>
+    </div>
+
+    <div class="container">
+      <!-- SIDEBAR MENU -->
+      <div class="sidebar-menu">
+        <div class="menu-item active" onclick="showSection('taller')">
+          <div class="menu-icon">🏢</div>
+          <div>Taller</div>
+        </div>
+        <div class="menu-item" onclick="showSection('comisiones')">
+          <div class="menu-icon">💰</div>
+          <div>Comisiones</div>
+        </div>
+        <div class="menu-item" onclick="showSection('integraciones')">
+          <div class="menu-icon">🔗</div>
+          <div>Integraciones</div>
+        </div>
+        <div class="menu-item" onclick="showSection('seguridad')">
+          <div class="menu-icon">🔒</div>
+          <div>Seguridad</div>
+        </div>
+        <div class="menu-item" onclick="showSection('respaldo')">
+          <div class="menu-icon">💾</div>
+          <div>Respaldo</div>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="main-content">
+        <!-- TALLER -->
+        <div id="taller" class="section active">
+          <div class="section-title">Información del Taller</div>
+          <div class="form-group">
+            <label for="tallerName">Nombre del Taller</label>
+            <input type="text" id="tallerName" value="Taller Jhon's Auto" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value="jhon@tallerautomotriz.com"
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input type="tel" id="phone" value="300-555-1234" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" value="Cra 45 #23-10, Medellín" />
+          </div>
+          <div class="form-group">
+            <label for="horarios">Horarios de Atención</label>
+            <textarea id="horarios">
+Lunes a Viernes: 8:00 AM - 6:00 PM
+Sábados: 8:00 AM - 2:00 PM
+Domingos: Cerrado</textarea
+            >
+          </div>
+          <div class="form-group">
+            <label for="cierre">Día de Cierre Semanal</label>
+            <select id="cierre">
+              <option>Domingo</option>
+              <option>Lunes</option>
+              <option>Martes</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn btn-primary">Guardar Cambios</button>
+            <button class="btn btn-secondary" style="margin-left: 8px">
+              Cancelar
+            </button>
+          </div>
+        </div>
+
+        <!-- COMISIONES -->
+        <div id="comisiones" class="section">
+          <div class="section-title">Configuración de Comisiones</div>
+          <div class="form-group">
+            <label for="comisionLatoneria">% Comisión Latonería</label>
+            <input type="text" id="comisionLatoneria" value="15%" />
+            <div class="help-text">
+              Porcentaje del ingreso que va al empleado
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="comisionPintura">% Comisión Pintura</label>
+            <input type="text" id="comisionPintura" value="18%" />
+            <div class="help-text">
+              Porcentaje del ingreso que va al empleado
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="comisionMecanica">% Comisión Mecánica</label>
+            <input type="text" id="comisionMecanica" value="12%" />
+            <div class="help-text">
+              Porcentaje del ingreso que va al empleado
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+
+        <!-- INTEGRACIONES -->
+        <div id="integraciones" class="section">
+          <div class="section-title">Integraciones Externas</div>
+
+          <div
+            style="
+              margin-bottom: 24px;
+              padding: 16px;
+              background: #e8f5e9;
+              border-radius: 6px;
+            "
+          >
+            <div style="font-weight: 600; color: #2e7d32; margin-bottom: 8px">
+              ✓ WhatsApp Business
+            </div>
+            <div style="font-size: 12px; color: #999">
+              Conectado | Enviando notificaciones automáticas
+            </div>
+          </div>
+
+          <div
+            style="
+              margin-bottom: 24px;
+              padding: 16px;
+              background: #e3f2fd;
+              border-radius: 6px;
+            "
+          >
+            <div style="font-weight: 600; color: #1565c0; margin-bottom: 8px">
+              ✓ Bancolombia
+            </div>
+            <div style="font-size: 12px; color: #999">
+              Conectado | Recibiendo transacciones automáticamente
+            </div>
+          </div>
+
+          <div
+            style="
+              margin-bottom: 24px;
+              padding: 16px;
+              background: #f3e5f5;
+              border-radius: 6px;
+            "
+          >
+            <div style="font-weight: 600; color: #6a1b9a; margin-bottom: 8px">
+              ✓ Nequi
+            </div>
+            <div style="font-size: 12px; color: #999">
+              Conectado | Detectando pagos automáticamente
+            </div>
+          </div>
+
+          <button class="btn btn-secondary">Gestionar Integraciones</button>
+        </div>
+
+        <!-- SEGURIDAD -->
+        <div id="seguridad" class="section">
+          <div class="section-title">Seguridad y Privacidad</div>
+
+          <div class="form-group">
+            <label>Autenticación de Dos Factores</label>
+            <div class="toggle-group">
+              <div class="toggle">
+                <div class="toggle-thumb"></div>
+              </div>
+              <span>No activado</span>
+            </div>
+            <div class="help-text">
+              Añade una capa extra de seguridad a tu cuenta
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Notificaciones de Cambios</label>
+            <div class="toggle-group">
+              <div class="toggle active">
+                <div class="toggle-thumb"></div>
+              </div>
+              <span>Activado</span>
+            </div>
+            <div class="help-text">
+              Recibe alertas si se hacen cambios en tu cuenta
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contraseña">Cambiar Contraseña</label>
+            <input
+              type="text"
+              id="contraseña"
+              placeholder="Nueva contraseña"
+              value=""
+            />
+            <div class="help-text">Dejalo vacío si no quieres cambiar</div>
+          </div>
+
+          <div>
+            <button class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+
+        <!-- RESPALDO -->
+        <div id="respaldo" class="section">
+          <div class="section-title">Respaldo de Datos</div>
+
+          <div style="margin-bottom: 20px">
+            <div style="font-weight: 600; margin-bottom: 8px">
+              Último Respaldo
+            </div>
+            <div style="font-size: 14px; color: #999">
+              5 de marzo de 2024 - 10:23 AM
+            </div>
+          </div>
+
+          <div>
+            <button class="btn btn-primary">Realizar Respaldo Ahora</button>
+            <button class="btn btn-secondary" style="margin-left: 8px">
+              Descargar Datos
+            </button>
+          </div>
+
+          <div class="danger-zone" style="margin-top: 32px">
+            <div class="danger-title">⚠️ Zona de Peligro</div>
+            <p style="font-size: 14px; margin-bottom: 12px; color: #333">
+              Una vez eliminada, la cuenta y todos sus datos se perderán
+              permanentemente.
+            </p>
+            <button class="btn btn-danger">Eliminar Cuenta y Datos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="navbar-item">🏠 Inicio</div>
+      <div class="navbar-item">📋 Trabajos</div>
+      <div class="navbar-item">💰 Gastos</div>
+      <div class="navbar-item">📦 Inventario</div>
+      <div class="navbar-item active">⋯ Más</div>
+    </div>
+
+    <script>
+      function showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll(".section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Remove active from all menu items
+        document.querySelectorAll(".menu-item").forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        // Show selected section
+        document.getElementById(sectionId).classList.add("active");
+        event.target.closest(".menu-item").classList.add("active");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventario - PintuMaster</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
+        color: #1a1a1a;
+      }
+
+      .header {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .main {
+        padding: 24px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding-bottom: 80px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .search-box {
+        flex: 1;
+        min-width: 200px;
+        padding: 10px 16px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: #cc0000;
+        color: #ffffff;
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        color: #1a1a1a;
+        border: 1px solid #ddd;
+      }
+
+      .product-table {
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 32px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: #f5f5f5;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 13px;
+        color: #3d3d3d;
+        text-transform: uppercase;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+      }
+
+      tr:hover {
+        background: #f9f9f9;
+      }
+
+      .product-name {
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+
+      .product-category {
+        font-size: 12px;
+        color: #999;
+      }
+
+      .stock-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .stock-low {
+        background: #ffebee;
+        color: #f44336;
+      }
+
+      .stock-medium {
+        background: #fff3e0;
+        color: #ff9800;
+      }
+
+      .stock-high {
+        background: #e8f5e9;
+        color: #4caf50;
+      }
+
+      .price {
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .action-btn {
+        padding: 4px 8px;
+        border: none;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .action-edit {
+        background: #e3f2fd;
+        color: #2196f3;
+      }
+
+      .action-delete {
+        background: #ffebee;
+        color: #f44336;
+      }
+
+      .alert-section {
+        background: #ffebee;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 24px;
+        border-left: 4px solid #f44336;
+      }
+
+      .alert-title {
+        font-weight: 700;
+        color: #f44336;
+        margin-bottom: 8px;
+      }
+
+      .alert-item {
+        font-size: 14px;
+        color: #3d3d3d;
+        margin-bottom: 6px;
+      }
+
+      .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: #ffffff;
+        border-top: 1px solid #ddd;
+        display: flex;
+        z-index: 200;
+      }
+
+      .navbar-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .navbar-item.active {
+        color: #cc0000;
+      }
+
+      @media (max-width: 768px) {
+        .main {
+          padding: 16px;
+        }
+
+        table {
+          font-size: 12px;
+        }
+
+        th,
+        td {
+          padding: 8px;
+        }
+
+        .toolbar {
+          flex-direction: column;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1 style="font-size: 18px; font-weight: 600">Inventario</h1>
+      <button class="btn btn-primary" style="margin: 0">+ Producto</button>
+    </div>
+
+    <div class="main">
+      <div class="page-title">Gestión de Inventario</div>
+
+      <!-- ALERTS -->
+      <div class="alert-section">
+        <div class="alert-title">⚠️ Alertas de Stock</div>
+        <div class="alert-item">🔴 Pintura Roja - Stock bajo (2 unidades)</div>
+        <div class="alert-item">
+          🔴 Masilla Poliéster - Stock crítico (1 unidad)
+        </div>
+        <div class="alert-item">🟡 Lija 220 - Stock medio (5 unidades)</div>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <input
+          type="text"
+          class="search-box"
+          placeholder="Buscar productos..."
+        />
+        <button class="btn btn-secondary">🔽 Categorías</button>
+      </div>
+
+      <!-- PRODUCTS TABLE -->
+      <div class="product-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Stock</th>
+              <th>Unidad</th>
+              <th>Precio</th>
+              <th>Mínimo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="product-name">Pintura Roja</div>
+                <div class="product-category">Ref: PM-001</div>
+              </td>
+              <td>Pintura</td>
+              <td><span class="stock-badge stock-low">2</span></td>
+              <td>Litro</td>
+              <td class="price">$85.000</td>
+              <td>5</td>
+              <td class="actions">
+                <button class="action-btn action-edit">Editar</button>
+                <button class="action-btn action-delete">Eliminar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-name">Masilla Poliéster</div>
+                <div class="product-category">Ref: PM-002</div>
+              </td>
+              <td>Materiales</td>
+              <td><span class="stock-badge stock-low">1</span></td>
+              <td>Kg</td>
+              <td class="price">$12.500</td>
+              <td>3</td>
+              <td class="actions">
+                <button class="action-btn action-edit">Editar</button>
+                <button class="action-btn action-delete">Eliminar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-name">Lija 220</div>
+                <div class="product-category">Ref: PM-003</div>
+              </td>
+              <td>Herramientas</td>
+              <td><span class="stock-badge stock-medium">5</span></td>
+              <td>Unidad</td>
+              <td class="price">$2.500</td>
+              <td>8</td>
+              <td class="actions">
+                <button class="action-btn action-edit">Editar</button>
+                <button class="action-btn action-delete">Eliminar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-name">Thinner Premium</div>
+                <div class="product-category">Ref: PM-004</div>
+              </td>
+              <td>Pintura</td>
+              <td><span class="stock-badge stock-high">15</span></td>
+              <td>Litro</td>
+              <td class="price">$18.000</td>
+              <td>5</td>
+              <td class="actions">
+                <button class="action-btn action-edit">Editar</button>
+                <button class="action-btn action-delete">Eliminar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-name">Imprimador Epóxico</div>
+                <div class="product-category">Ref: PM-005</div>
+              </td>
+              <td>Pintura</td>
+              <td><span class="stock-badge stock-high">8</span></td>
+              <td>Litro</td>
+              <td class="price">$45.000</td>
+              <td>3</td>
+              <td class="actions">
+                <button class="action-btn action-edit">Editar</button>
+                <button class="action-btn action-delete">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="navbar-item">🏠 Inicio</div>
+      <div class="navbar-item">📋 Trabajos</div>
+      <div class="navbar-item">💰 Gastos</div>
+      <div class="navbar-item active">📦 Inventario</div>
+      <div class="navbar-item">⋯ Más</div>
+    </div>
+  </body>
+</html>

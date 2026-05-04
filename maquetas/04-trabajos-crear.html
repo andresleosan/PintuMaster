@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Trabajo - PintuMaster</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
+        color: #1a1a1a;
+      }
+
+      .header {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .back-btn {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .main {
+        padding: 24px;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-bottom: 120px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      .section {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #cc0000;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #1a1a1a;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="number"],
+      input[type="date"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #cc0000;
+        box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .form-group.required label::after {
+        content: " *";
+        color: #cc0000;
+      }
+
+      .checkbox-group,
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .checkbox-item,
+      .radio-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      input[type="checkbox"],
+      input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .checkbox-item label,
+      .radio-item label {
+        margin: 0;
+        font-weight: 400;
+        cursor: pointer;
+      }
+
+      .file-upload {
+        border: 2px dashed #ddd;
+        border-radius: 6px;
+        padding: 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .file-upload:hover {
+        border-color: #cc0000;
+        background: #fff5f5;
+      }
+
+      .file-icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .file-text {
+        font-size: 13px;
+        color: #999;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        background: #ffffff;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-height: 40px;
+      }
+
+      .btn-primary {
+        background: #cc0000;
+        color: #ffffff;
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        background: #aa0000;
+      }
+
+      .btn-secondary {
+        background: #f5f5f5;
+        color: #1a1a1a;
+        border: 1px solid #ddd;
+      }
+
+      .btn-secondary:hover {
+        border-color: #cc0000;
+      }
+
+      .help-text {
+        font-size: 12px;
+        color: #999;
+        margin-top: 4px;
+      }
+
+      @media (max-width: 768px) {
+        .main {
+          padding: 16px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          position: static;
+          flex-direction: column-reverse;
+        }
+
+        .btn-primary {
+          flex: unset;
+        }
+
+        .page-title {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <button class="back-btn">← Volver</button>
+      <h1 style="font-size: 18px; font-weight: 600">Nuevo Trabajo</h1>
+      <div style="width: 40px"></div>
+    </div>
+
+    <div class="main">
+      <div class="page-title">Crear Nuevo Trabajo</div>
+
+      <form id="trabajoForm">
+        <!-- CLIENTE -->
+        <div class="section">
+          <div class="section-title">Información del Cliente</div>
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="cliente">Nombre del Cliente</label>
+              <input
+                type="text"
+                id="cliente"
+                name="cliente"
+                placeholder="Juan Pérez"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input
+                type="tel"
+                id="telefono"
+                name="telefono"
+                placeholder="300-555-1234"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="cliente@email.com"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- VEHÍCULO -->
+        <div class="section">
+          <div class="section-title">Información del Vehículo</div>
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="placa">Placa</label>
+              <input
+                type="text"
+                id="placa"
+                name="placa"
+                placeholder="ABC-123"
+                required
+              />
+            </div>
+            <div class="form-group required">
+              <label for="marca">Marca</label>
+              <input
+                type="text"
+                id="marca"
+                name="marca"
+                placeholder="Toyota"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="modelo">Modelo</label>
+              <input
+                type="text"
+                id="modelo"
+                name="modelo"
+                placeholder="Corolla 2020"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="color">Color</label>
+              <input
+                type="text"
+                id="color"
+                name="color"
+                placeholder="Blanco perla"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- TRABAJO -->
+        <div class="section">
+          <div class="section-title">Detalles del Trabajo</div>
+          <div class="form-group required">
+            <label>Tipo de Trabajo</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="latoneria"
+                  name="tipoTrabajo"
+                  value="Latonería"
+                />
+                <label for="latoneria"
+                  >Latonería (Abollones, golpes, etc.)</label
+                >
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="pintura"
+                  name="tipoTrabajo"
+                  value="Pintura"
+                />
+                <label for="pintura">Pintura (Repinte, color completo)</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="mecanica"
+                  name="tipoTrabajo"
+                  value="Mecánica"
+                />
+                <label for="mecanica">Mecánica Menor (Piezas, ajustes)</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label for="descripcion">Descripción del Trabajo</label>
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              placeholder="Describe en detalle el trabajo a realizar..."
+              required
+            ></textarea>
+            <div class="help-text">
+              Se clara y específica para que el equipo sepa exactamente qué
+              hacer
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="precioAcordado">Precio Acordado ($)</label>
+              <input
+                type="number"
+                id="precioAcordado"
+                name="precioAcordado"
+                placeholder="450000"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="fechaEntrega">Fecha de Entrega</label>
+              <input type="date" id="fechaEntrega" name="fechaEntrega" />
+            </div>
+          </div>
+        </div>
+
+        <!-- FOTOS -->
+        <div class="section">
+          <div class="section-title">Fotos del Vehículo</div>
+          <div class="file-upload" id="photoUpload">
+            <div class="file-icon">📸</div>
+            <div>Click para subir fotos o arrastra aquí</div>
+            <div class="file-text">PNG, JPG o WebP (máx 5MB cada una)</div>
+          </div>
+          <div id="photoList" style="margin-top: 16px"></div>
+        </div>
+
+        <!-- NOTAS -->
+        <div class="section">
+          <div class="section-title">Notas Adicionales</div>
+          <div class="form-group">
+            <label for="notas">Notas Internas</label>
+            <textarea
+              id="notas"
+              name="notas"
+              placeholder="Notas que solo verá el equipo..."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- ESPACIADOR -->
+        <div style="height: 120px"></div>
+      </form>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="history.back()">
+          Cancelar
+        </button>
+        <button type="submit" form="trabajoForm" class="btn btn-primary">
+          Crear Trabajo
+        </button>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("trabajoForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          console.log("Trabajo creado");
+        });
+
+      document
+        .getElementById("photoUpload")
+        .addEventListener("click", function () {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.multiple = true;
+          input.accept = "image/*";
+          input.click();
+        });
+    </script>
+  </body>
+</html>

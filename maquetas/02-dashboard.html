@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - PintuMaster</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+      }
+
+      /* ==================== HEADER ==================== */
+      .header {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .menu-toggle {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 24px;
+        cursor: pointer;
+        display: none;
+      }
+
+      .header-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .settings-btn {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      /* ==================== LAYOUT DESKTOP ==================== */
+      .container {
+        display: flex;
+        gap: 0;
+      }
+
+      /* ==================== SIDEBAR ==================== */
+      .sidebar {
+        width: 220px;
+        background: #1a1a1a;
+        color: #ffffff;
+        min-height: calc(100vh - 60px);
+        padding: 24px 0;
+        position: sticky;
+        top: 60px;
+      }
+
+      .sidebar-logo {
+        text-align: center;
+        padding: 16px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid #2a2a2a;
+      }
+
+      .sidebar-logo-text {
+        font-size: 24px;
+        font-weight: 700;
+        color: #cc0000;
+      }
+
+      .nav-item {
+        padding: 16px 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #999;
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+      }
+
+      .nav-item:hover {
+        background: #2a2a2a;
+        color: #ffffff;
+      }
+
+      .nav-item.active {
+        background: #cc0000;
+        color: #ffffff;
+        border-left-color: #cc0000;
+      }
+
+      .nav-icon {
+        font-size: 20px;
+      }
+
+      .nav-label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* ==================== MAIN CONTENT ==================== */
+      .main {
+        flex: 1;
+        padding: 24px;
+        overflow-y: auto;
+        max-height: calc(100vh - 60px);
+      }
+
+      .greeting {
+        margin-bottom: 32px;
+      }
+
+      .greeting-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+      }
+
+      .greeting-subtitle {
+        font-size: 14px;
+        color: #3d3d3d;
+      }
+
+      /* ==================== METRICS CARDS ==================== */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .metric-card {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s;
+      }
+
+      .metric-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .metric-label {
+        font-size: 12px;
+        color: #999;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .metric-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+      }
+
+      .metric-trend {
+        font-size: 12px;
+        color: #4caf50;
+        font-weight: 600;
+      }
+
+      .metric-trend.negative {
+        color: #f44336;
+      }
+
+      /* ==================== CHART SECTION ==================== */
+      .chart-section {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 32px;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #1a1a1a;
+      }
+
+      .chart-placeholder {
+        height: 200px;
+        background: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        border: 1px dashed #ddd;
+      }
+
+      /* ==================== RECENT WORKS ==================== */
+      .works-list {
+        margin-bottom: 32px;
+      }
+
+      .work-item {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .work-item:hover {
+        background: #e8e8e8;
+        transform: translateX(4px);
+      }
+
+      .work-info {
+        flex: 1;
+      }
+
+      .work-plate {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+
+      .work-model {
+        font-size: 12px;
+        color: #999;
+        margin-top: 2px;
+      }
+
+      .work-badge {
+        background: #2196f3;
+        color: #ffffff;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .work-badge.pending {
+        background: #ff9800;
+      }
+
+      .work-badge.painting {
+        background: #9c27b0;
+      }
+
+      .work-badge.done {
+        background: #4caf50;
+      }
+
+      /* ==================== QUICK ACCESS ==================== */
+      .quick-access {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .quick-btn {
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .quick-btn:hover {
+        border-color: #cc0000;
+        box-shadow: 0 4px 12px rgba(204, 0, 0, 0.1);
+      }
+
+      .quick-btn.primary {
+        background: #cc0000;
+        color: #ffffff;
+        border-color: #cc0000;
+      }
+
+      .quick-btn.primary:hover {
+        background: #aa0000;
+      }
+
+      .quick-icon {
+        font-size: 20px;
+        margin-bottom: 8px;
+      }
+
+      /* ==================== NAVBAR MOBILE ==================== */
+      .navbar {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: #ffffff;
+        border-top: 1px solid #ddd;
+        z-index: 200;
+      }
+
+      .navbar-items {
+        display: flex;
+        height: 100%;
+        width: 100%;
+      }
+
+      .navbar-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #999;
+        transition: all 0.2s;
+        border-top: 2px solid transparent;
+      }
+
+      .navbar-item.active {
+        color: #cc0000;
+        border-top-color: #cc0000;
+      }
+
+      .navbar-icon {
+        font-size: 20px;
+        margin-bottom: 2px;
+      }
+
+      .navbar-label {
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      /* ==================== RESPONSIVE ==================== */
+      @media (max-width: 1024px) {
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .main {
+          padding: 16px;
+          padding-bottom: 80px;
+          max-height: calc(100vh - 60px - 64px);
+        }
+
+        .navbar {
+          display: flex;
+        }
+
+        .metrics-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .quick-access {
+          grid-template-columns: 1fr;
+        }
+
+        .greeting-title {
+          font-size: 20px;
+        }
+
+        .metric-value {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <button class="menu-toggle">☰</button>
+        <div class="header-title">Dashboard</div>
+      </div>
+      <div class="header-right">
+        <button class="settings-btn">⚙️</button>
+      </div>
+    </div>
+
+    <!-- CONTAINER -->
+    <div class="container">
+      <!-- SIDEBAR (Desktop) -->
+      <div class="sidebar">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-text">PM</div>
+        </div>
+        <div class="nav-item active">
+          <div class="nav-icon">🏠</div>
+          <div class="nav-label">Inicio</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">📋</div>
+          <div class="nav-label">Trabajos</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">💰</div>
+          <div class="nav-label">Finanzas</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">📦</div>
+          <div class="nav-label">Inventario</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">👥</div>
+          <div class="nav-label">Empleados</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">📊</div>
+          <div class="nav-label">Reportes</div>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">⚙️</div>
+          <div class="nav-label">Ajustes</div>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="main">
+        <div class="greeting">
+          <div class="greeting-title">Hola, Jhon</div>
+          <div class="greeting-subtitle">Bienvenido a PintuMaster</div>
+        </div>
+
+        <!-- METRICS CARDS -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Ingresos Hoy</div>
+            <div class="metric-value">$850.000</div>
+            <div class="metric-trend">↑ 12% vs ayer</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Trabajos Activos</div>
+            <div class="metric-value">5</div>
+            <div class="metric-trend">Ver detalles →</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Trabajos Terminados</div>
+            <div class="metric-value">3</div>
+            <div class="metric-trend">Ver detalles →</div>
+          </div>
+        </div>
+
+        <!-- CHART SECTION -->
+        <div class="chart-section">
+          <div class="section-title">Resumen Financiero</div>
+          <div class="chart-placeholder">
+            📊 Gráfico Donut: Ingresos / Gastos / Ganancia
+          </div>
+        </div>
+
+        <!-- RECENT WORKS -->
+        <div class="works-list">
+          <div class="section-title">Trabajos Recientes</div>
+          <div class="work-item">
+            <div class="work-info">
+              <div class="work-plate">ABC-123</div>
+              <div class="work-model">Toyota Corolla - Juan Pérez</div>
+            </div>
+            <div class="work-badge">En proceso</div>
+          </div>
+          <div class="work-item">
+            <div class="work-info">
+              <div class="work-plate">XYZ-789</div>
+              <div class="work-model">Honda Civic - María López</div>
+            </div>
+            <div class="work-badge pintura">Pintura</div>
+          </div>
+          <div class="work-item">
+            <div class="work-info">
+              <div class="work-plate">DEF-456</div>
+              <div class="work-model">Mazda 3 - Carlos Rodríguez</div>
+            </div>
+            <div class="work-badge done">Terminado</div>
+          </div>
+        </div>
+
+        <!-- QUICK ACCESS -->
+        <div class="section-title" style="margin-bottom: 12px">
+          Accesos Rápidos
+        </div>
+        <div class="quick-access">
+          <button class="quick-btn primary">
+            <div class="quick-icon">➕</div>
+            <div>Nuevo Trabajo</div>
+          </button>
+          <button class="quick-btn">
+            <div class="quick-icon">💸</div>
+            <div>Registrar Gasto</div>
+          </button>
+          <button class="quick-btn">
+            <div class="quick-icon">📦</div>
+            <div>Inventario</div>
+          </button>
+          <button class="quick-btn">
+            <div class="quick-icon">📊</div>
+            <div>Reportes</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVBAR MOBILE -->
+    <div class="navbar">
+      <div class="navbar-item active">
+        <div class="navbar-icon">🏠</div>
+        <div class="navbar-label">Inicio</div>
+      </div>
+      <div class="navbar-item">
+        <div class="navbar-icon">📋</div>
+        <div class="navbar-label">Trabajos</div>
+      </div>
+      <div class="navbar-item">
+        <div class="navbar-icon">💰</div>
+        <div class="navbar-label">Gastos</div>
+      </div>
+      <div class="navbar-item">
+        <div class="navbar-icon">📦</div>
+        <div class="navbar-label">Inventario</div>
+      </div>
+      <div class="navbar-item">
+        <div class="navbar-icon">⋯</div>
+        <div class="navbar-label">Más</div>
+      </div>
+    </div>
+
+    <script>
+      // Toggle sidebar mobile
+      document
+        .querySelector(".menu-toggle")
+        .addEventListener("click", function () {
+          // Aquí iría la lógica de toggle del sidebar en mobile
+          console.log("Toggle sidebar");
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes - PintuMaster</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
+        color: #1a1a1a;
+      }
+
+      .header {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .main {
+        padding: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 80px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+
+      .date-range {
+        display: flex;
+        gap: 8px;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      input[type="date"] {
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: #cc0000;
+        color: #ffffff;
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        color: #1a1a1a;
+        border: 1px solid #ddd;
+      }
+
+      .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .chart-card {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .chart-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+
+      .chart-placeholder {
+        height: 250px;
+        background: #f5f5f5;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        border: 1px dashed #ddd;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .stat-card {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #999;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a1a1a;
+      }
+
+      .stat-change {
+        font-size: 12px;
+        color: #4caf50;
+        margin-top: 4px;
+      }
+
+      .stat-change.negative {
+        color: #f44336;
+      }
+
+      .table-card {
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 32px;
+      }
+
+      .table-title {
+        padding: 16px 20px;
+        background: #f5f5f5;
+        font-weight: 700;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th {
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        color: #3d3d3d;
+        text-transform: uppercase;
+        background: #f5f5f5;
+        border-bottom: 1px solid #ddd;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        font-size: 13px;
+      }
+
+      tr:hover {
+        background: #f9f9f9;
+      }
+
+      .employee-name {
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+
+      .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: #ffffff;
+        border-top: 1px solid #ddd;
+        display: flex;
+        z-index: 200;
+      }
+
+      .navbar-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .navbar-item.active {
+        color: #cc0000;
+      }
+
+      @media (max-width: 768px) {
+        .main {
+          padding: 16px;
+        }
+
+        .charts-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .date-range {
+          flex-direction: column;
+        }
+
+        .toolbar {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1 style="font-size: 18px; font-weight: 600">Reportes</h1>
+      <button class="btn btn-primary" style="margin: 0">📥 Descargar</button>
+    </div>
+
+    <div class="main">
+      <div class="page-title">Análisis y Reportes</div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="date-range">
+          <input type="date" value="2024-03-01" />
+          <span style="display: flex; align-items: center; color: #999"
+            >hasta</span
+          >
+          <input type="date" value="2024-03-31" />
+        </div>
+        <button class="btn btn-secondary">🔽 Filtros</button>
+        <button class="btn btn-primary">Aplicar</button>
+      </div>
+
+      <!-- STATS GRID -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Trabajos Completados</div>
+          <div class="stat-value">42</div>
+          <div class="stat-change">↑ 8 vs mes anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ingresos Totales</div>
+          <div class="stat-value">$24.5M</div>
+          <div class="stat-change">↑ 15% vs mes anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Gastos Totales</div>
+          <div class="stat-value">$5.2M</div>
+          <div class="stat-change negative">↑ 5% vs mes anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ganancia Neta</div>
+          <div class="stat-value">$19.3M</div>
+          <div class="stat-change">↑ 18% vs mes anterior</div>
+        </div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Ingresos vs Gastos</div>
+          <div class="chart-placeholder">📊 Gráfico Barras</div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Distribución por Tipo</div>
+          <div class="chart-placeholder">🥧 Gráfico Donut</div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Tendencia de Ingresos</div>
+          <div class="chart-placeholder">📈 Gráfico Líneas</div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Productividad Empleados</div>
+          <div class="chart-placeholder">👥 Ranking</div>
+        </div>
+      </div>
+
+      <!-- TOP EMPLOYEES -->
+      <div class="table-card">
+        <div class="table-title">Empleados Más Productivos</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Empleado</th>
+              <th>Rol</th>
+              <th>Trabajos</th>
+              <th>Ingresos Generados</th>
+              <th>Comisión</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="employee-name">Carlos Rodríguez</span></td>
+              <td>Pintor Especialista</td>
+              <td>18</td>
+              <td>$8.500.000</td>
+              <td>$1.200.000</td>
+            </tr>
+            <tr>
+              <td><span class="employee-name">Juan Martínez</span></td>
+              <td>Latonero / Soldador</td>
+              <td>15</td>
+              <td>$6.200.000</td>
+              <td>$930.000</td>
+            </tr>
+            <tr>
+              <td><span class="employee-name">Miguel López</span></td>
+              <td>Pintor Auxiliar</td>
+              <td>12</td>
+              <td>$5.100.000</td>
+              <td>$765.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TOP SERVICES -->
+      <div class="table-card">
+        <div class="table-title">Servicios Más Solicitados</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo de Trabajo</th>
+              <th>Cantidad</th>
+              <th>Ingresos</th>
+              <th>% del Total</th>
+              <th>Precio Promedio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Latonería</td>
+              <td>22</td>
+              <td>$9.500.000</td>
+              <td>39%</td>
+              <td>$432.000</td>
+            </tr>
+            <tr>
+              <td>Pintura Completa</td>
+              <td>14</td>
+              <td>$8.200.000</td>
+              <td>34%</td>
+              <td>$585.000</td>
+            </tr>
+            <tr>
+              <td>Pintura Parcial</td>
+              <td>6</td>
+              <td>$2.800.000</td>
+              <td>11%</td>
+              <td>$466.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="navbar-item">🏠 Inicio</div>
+      <div class="navbar-item">📋 Trabajos</div>
+      <div class="navbar-item">💰 Gastos</div>
+      <div class="navbar-item">📦 Inventario</div>
+      <div class="navbar-item">⋯ Más</div>
+    </div>
+  </body>
+</html>

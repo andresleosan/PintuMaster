@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trabajos - PintuMaster</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
+        color: #1a1a1a;
+      }
+
+      .header {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 16px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+      }
+
+      .sidebar {
+        width: 220px;
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 24px 0;
+        min-height: calc(100vh - 60px);
+        display: none;
+      }
+
+      .sidebar.open {
+        display: block;
+      }
+
+      .sidebar-item {
+        padding: 16px 24px;
+        color: #999;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .sidebar-item.active {
+        background: #cc0000;
+        color: #ffffff;
+      }
+
+      .main {
+        flex: 1;
+        padding: 24px;
+        overflow-y: auto;
+        max-height: calc(100vh - 60px);
+        padding-bottom: 80px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .search-box {
+        flex: 1;
+        min-width: 200px;
+        padding: 10px 16px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.2s;
+        min-height: 40px;
+      }
+
+      .btn-primary {
+        background: #cc0000;
+        color: #ffffff;
+      }
+
+      .btn-primary:hover {
+        background: #aa0000;
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        color: #1a1a1a;
+        border: 1px solid #ddd;
+      }
+
+      .btn-secondary:hover {
+        border-color: #cc0000;
+      }
+
+      .filter-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+
+      .tab {
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        background: #ffffff;
+        cursor: pointer;
+        font-size: 13px;
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+
+      .tab.active {
+        background: #cc0000;
+        color: #ffffff;
+        border-color: #cc0000;
+      }
+
+      .work-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .work-card {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .work-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+      }
+
+      .work-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 12px;
+      }
+
+      .work-plate {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1a1a1a;
+      }
+
+      .work-badge {
+        background: #2196f3;
+        color: #ffffff;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .work-badge.pending {
+        background: #ff9800;
+      }
+
+      .work-badge.painting {
+        background: #9c27b0;
+      }
+
+      .work-badge.done {
+        background: #4caf50;
+      }
+
+      .work-details {
+        font-size: 13px;
+        color: #3d3d3d;
+        margin-bottom: 12px;
+      }
+
+      .work-details-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+      }
+
+      .work-price {
+        font-size: 16px;
+        font-weight: 700;
+        color: #cc0000;
+        margin-bottom: 12px;
+      }
+
+      .work-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .work-actions button {
+        flex: 1;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-edit {
+        background: #e3f2fd;
+        color: #2196f3;
+      }
+
+      .btn-delete {
+        background: #ffebee;
+        color: #f44336;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+      }
+
+      .empty-icon {
+        font-size: 64px;
+        margin-bottom: 16px;
+      }
+
+      .empty-text {
+        font-size: 18px;
+        color: #999;
+        margin-bottom: 24px;
+      }
+
+      .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: #ffffff;
+        border-top: 1px solid #ddd;
+        display: flex;
+        z-index: 200;
+      }
+
+      .navbar-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .navbar-item.active {
+        color: #cc0000;
+      }
+
+      @media (max-width: 768px) {
+        .work-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .toolbar {
+          flex-direction: column;
+        }
+
+        .search-box {
+          width: 100%;
+        }
+
+        .main {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1 style="font-size: 18px; font-weight: 600">Trabajos</h1>
+      <button class="btn btn-primary">+ Nuevo</button>
+    </div>
+
+    <div class="container">
+      <div class="sidebar">
+        <div class="sidebar-item">📋 Trabajos</div>
+        <div class="sidebar-item">💰 Finanzas</div>
+        <div class="sidebar-item">📦 Inventario</div>
+      </div>
+
+      <div class="main">
+        <div class="toolbar">
+          <input
+            type="text"
+            class="search-box"
+            placeholder="Buscar por placa, cliente o modelo..."
+          />
+          <button class="btn btn-secondary">🔽 Filtros</button>
+        </div>
+
+        <div class="filter-tabs">
+          <div class="tab active">Todos (5)</div>
+          <div class="tab">Pendientes (1)</div>
+          <div class="tab">En Proceso (2)</div>
+          <div class="tab">Pintura (1)</div>
+          <div class="tab">Terminados (1)</div>
+        </div>
+
+        <div class="work-grid">
+          <div class="work-card">
+            <div class="work-header">
+              <div class="work-plate">ABC-123</div>
+              <div class="work-badge">En proceso</div>
+            </div>
+            <div class="work-details">
+              <div class="work-details-row">
+                <span>Toyota Corolla</span>
+              </div>
+              <div class="work-details-row">
+                <span>Juan Pérez</span>
+              </div>
+              <div class="work-details-row">
+                <span>Latonería</span>
+              </div>
+            </div>
+            <div class="work-price">$450.000</div>
+            <div class="work-actions">
+              <button class="btn-edit">Ver</button>
+              <button class="btn-delete">Editar</button>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-header">
+              <div class="work-plate">XYZ-789</div>
+              <div class="work-badge painting">Pintura</div>
+            </div>
+            <div class="work-details">
+              <div class="work-details-row">
+                <span>Honda Civic</span>
+              </div>
+              <div class="work-details-row">
+                <span>María López</span>
+              </div>
+              <div class="work-details-row">
+                <span>Pintura Completa</span>
+              </div>
+            </div>
+            <div class="work-price">$850.000</div>
+            <div class="work-actions">
+              <button class="btn-edit">Ver</button>
+              <button class="btn-delete">Editar</button>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-header">
+              <div class="work-plate">DEF-456</div>
+              <div class="work-badge done">Terminado</div>
+            </div>
+            <div class="work-details">
+              <div class="work-details-row">
+                <span>Mazda 3</span>
+              </div>
+              <div class="work-details-row">
+                <span>Carlos Rodríguez</span>
+              </div>
+              <div class="work-details-row">
+                <span>Latonería</span>
+              </div>
+            </div>
+            <div class="work-price">$350.000</div>
+            <div class="work-actions">
+              <button class="btn-edit">Ver</button>
+              <button class="btn-delete">Editar</button>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-header">
+              <div class="work-plate">GHI-147</div>
+              <div class="work-badge pending">Pendiente</div>
+            </div>
+            <div class="work-details">
+              <div class="work-details-row">
+                <span>Nissan Altima</span>
+              </div>
+              <div class="work-details-row">
+                <span>Ana Martínez</span>
+              </div>
+              <div class="work-details-row">
+                <span>Latonería + Pintura</span>
+              </div>
+            </div>
+            <div class="work-price">$1.200.000</div>
+            <div class="work-actions">
+              <button class="btn-edit">Ver</button>
+              <button class="btn-delete">Editar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="navbar-item active">🏠 Inicio</div>
+      <div class="navbar-item">📋 Trabajos</div>
+      <div class="navbar-item">💰 Gastos</div>
+      <div class="navbar-item">📦 Inventario</div>
+      <div class="navbar-item">⋯ Más</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Gasto - PintuMaster</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
+        color: #1a1a1a;
+      }
+
+      .header {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .back-btn {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .main {
+        padding: 24px;
+        max-width: 600px;
+        margin: 0 auto;
+        padding-bottom: 120px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+      }
+
+      .section {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #cc0000;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #1a1a1a;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #cc0000;
+        box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
+      }
+
+      .form-group.required label::after {
+        content: " *";
+        color: #cc0000;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+
+      .help-text {
+        font-size: 12px;
+        color: #999;
+        margin-top: 4px;
+      }
+
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        background: #ffffff;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-height: 40px;
+      }
+
+      .btn-primary {
+        background: #cc0000;
+        color: #ffffff;
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        background: #aa0000;
+      }
+
+      .btn-secondary {
+        background: #f5f5f5;
+        color: #1a1a1a;
+        border: 1px solid #ddd;
+      }
+
+      .btn-secondary:hover {
+        border-color: #cc0000;
+      }
+
+      @media (max-width: 768px) {
+        .main {
+          padding: 16px;
+        }
+
+        .form-actions {
+          position: static;
+          flex-direction: column-reverse;
+        }
+
+        .btn-primary {
+          flex: unset;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <button class="back-btn">← Volver</button>
+      <h1 style="font-size: 18px; font-weight: 600">Nuevo Gasto</h1>
+      <div style="width: 40px"></div>
+    </div>
+
+    <div class="main">
+      <div class="page-title">Registrar Gasto</div>
+
+      <form id="gastoForm">
+        <!-- INFORMACIÓN BÁSICA -->
+        <div class="section">
+          <div class="section-title">Información Básica</div>
+
+          <div class="form-group required">
+            <label for="concepto">Concepto del Gasto</label>
+            <input
+              type="text"
+              id="concepto"
+              name="concepto"
+              placeholder="Ej: Pintura roja, Nómina Juan, Arriendo"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group required">
+              <label for="monto">Monto ($)</label>
+              <input
+                type="number"
+                id="monto"
+                name="monto"
+                placeholder="180000"
+                required
+              />
+            </div>
+            <div class="form-group required">
+              <label for="fecha">Fecha del Gasto</label>
+              <input type="date" id="fecha" name="fecha" required />
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required>
+              <option value="">-- Selecciona una categoría --</option>
+              <option value="Materiales">
+                🎨 Materiales (Pintura, Lija, etc)
+              </option>
+              <option value="Herramientas">🔧 Herramientas y Equipos</option>
+              <option value="Salarios">👥 Salarios y Nómina</option>
+              <option value="Arriendo">🏢 Arriendo/Alquiler</option>
+              <option value="Servicios">
+                📱 Servicios (Luz, Agua, Internet)
+              </option>
+              <option value="Transporte">🚗 Transporte</option>
+              <option value="Otros">📦 Otros Gastos</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- DETALLES -->
+        <div class="section">
+          <div class="section-title">Detalles Adicionales</div>
+
+          <div class="form-group">
+            <label for="descripcion">Descripción (Opcional)</label>
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              placeholder="Detalles sobre este gasto..."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>¿Es este gasto recurrente?</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="recurrente" name="recurrente" />
+                <label for="recurrente">Sí, se repite mensualmente</label>
+              </div>
+            </div>
+            <div class="help-text">
+              Si es sí, se marcará como gasgo recurrente para análisis
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="comprobante">Número de Comprobante/Recibo</label>
+            <input
+              type="text"
+              id="comprobante"
+              name="comprobante"
+              placeholder="Ej: REC-001, INV-5423"
+            />
+            <div class="help-text">Para auditoría y seguimiento</div>
+          </div>
+        </div>
+
+        <!-- ESPACIADOR -->
+        <div style="height: 120px"></div>
+      </form>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="history.back()">
+          Cancelar
+        </button>
+        <button type="submit" form="gastoForm" class="btn btn-primary">
+          Registrar Gasto
+        </button>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("gastoForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          console.log("Gasto registrado");
+        });
+    </script>
+  </body>
+</html>
