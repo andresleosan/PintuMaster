@@ -260,9 +260,31 @@
         color: #cc0000;
       }
 
-      @media (max-width: 768px) {
+      /* ==================== RESPONSIVE ==================== */
+      /* Extra Small (320px - 425px) */
+      @media (max-width: 425px) {
+        .main {
+          padding: 12px;
+          padding-bottom: 80px;
+        }
+
         .summary-cards {
           grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .summary-card {
+          padding: 14px;
+        }
+
+        .tabs {
+          gap: 4px;
+          overflow-x: auto;
+        }
+
+        .tab-btn {
+          min-height: 44px;
+          font-size: 12px;
         }
 
         table {
@@ -274,8 +296,43 @@
           padding: 8px;
         }
 
+        button {
+          min-height: 48px;
+        }
+      }
+
+      /* Small (425px - 768px) */
+      @media (min-width: 426px) and (max-width: 768px) {
+        .main {
+          padding: 16px;
+          padding-bottom: 80px;
+        }
+
+        .summary-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .tabs {
+          gap: 8px;
+        }
+
         .toolbar {
           flex-direction: column;
+        }
+      }
+
+      /* Large (1024px+) */
+      @media (min-width: 1025px) {
+        .summary-cards {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+      }
+
+      /* Extra Large (2560px+) */
+      @media (min-width: 2560px) {
+        .main {
+          max-width: 1400px;
+          margin: 0 auto;
         }
       }
     </style>

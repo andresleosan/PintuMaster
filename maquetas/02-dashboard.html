@@ -363,11 +363,75 @@
       }
 
       .navbar-label {
-        font-size: 10px;
+        font-size: 12px;
         font-weight: 600;
       }
 
       /* ==================== RESPONSIVE ==================== */
+      /* Extra Small (320px) */
+      @media (max-width: 425px) {
+        body {
+          font-size: 14px;
+        }
+
+        .header {
+          padding: 12px;
+        }
+
+        .header-title {
+          font-size: 16px;
+        }
+
+        .main {
+          padding: 12px;
+          padding-bottom: 80px;
+        }
+
+        .greeting-title {
+          font-size: 18px;
+        }
+
+        .metric-value {
+          font-size: 20px;
+        }
+
+        .metrics-grid {
+          gap: 12px;
+        }
+
+        .metric-card {
+          padding: 12px;
+        }
+
+        .navbar-label {
+          font-size: 11px;
+        }
+
+        .quick-access {
+          gap: 8px;
+        }
+
+        .quick-btn {
+          padding: 12px;
+          font-size: 12px;
+        }
+
+        .section-title {
+          font-size: 14px;
+        }
+      }
+
+      /* Small (425px - 768px) */
+      @media (max-width: 768px) and (min-width: 426px) {
+        .main {
+          padding: 16px;
+        }
+
+        .navbar-label {
+          font-size: 12px;
+        }
+      }
+
       @media (max-width: 1024px) {
         .metrics-grid {
           grid-template-columns: repeat(2, 1fr);
@@ -407,6 +471,36 @@
 
         .metric-value {
           font-size: 24px;
+        }
+      }
+
+      /* Large (1024px+) */
+      @media (min-width: 1025px) {
+        .menu-toggle {
+          display: none !important;
+        }
+      }
+
+      /* Extra Large (2560px+) */
+      @media (min-width: 2560px) {
+        body {
+          font-size: 16px;
+        }
+
+        .header {
+          padding: 20px;
+        }
+
+        .main {
+          max-width: 1400px;
+        }
+
+        .metrics-grid {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .metric-value {
+          font-size: 32px;
         }
       }
     </style>

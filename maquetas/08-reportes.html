@@ -225,9 +225,52 @@
         color: #cc0000;
       }
 
-      @media (max-width: 768px) {
+      /* ==================== RESPONSIVE ==================== */
+      /* Extra Small (320px - 425px) */
+      @media (max-width: 425px) {
+        .main {
+          padding: 12px;
+          padding-bottom: 80px;
+        }
+
+        .date-range {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .date-range input,
+        .date-range button {
+          min-height: 48px;
+        }
+
+        .toolbar {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .toolbar button {
+          min-height: 48px;
+        }
+
+        .charts-grid {
+          grid-template-columns: 1fr;
+        }
+
+        table {
+          font-size: 11px;
+        }
+
+        th,
+        td {
+          padding: 6px;
+        }
+      }
+
+      /* Small (425px - 768px) */
+      @media (min-width: 426px) and (max-width: 768px) {
         .main {
           padding: 16px;
+          padding-bottom: 80px;
         }
 
         .charts-grid {
@@ -240,6 +283,21 @@
 
         .toolbar {
           flex-direction: column;
+        }
+      }
+
+      /* Large (1024px+) */
+      @media (min-width: 1025px) {
+        .charts-grid {
+          grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        }
+      }
+
+      /* Extra Large (2560px+) */
+      @media (min-width: 2560px) {
+        .main {
+          max-width: 1400px;
+          margin: 0 auto;
         }
       }
     </style>

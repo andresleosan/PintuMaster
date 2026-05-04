@@ -217,17 +217,72 @@
         color: #cc0000;
       }
 
-      @media (max-width: 768px) {
+      /* ==================== RESPONSIVE ==================== */
+      /* Extra Small (320px - 425px) */
+      @media (max-width: 425px) {
         .main {
-          padding: 16px;
-        }
-
-        .employee-grid {
-          grid-template-columns: 1fr;
+          padding: 12px;
+          padding-bottom: 80px;
         }
 
         .toolbar {
           flex-direction: column;
+          gap: 8px;
+        }
+
+        .toolbar button,
+        .toolbar input {
+          min-height: 48px;
+        }
+
+        .employee-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .employee-card {
+          padding: 14px;
+          min-height: 140px;
+        }
+
+        .employee-card button {
+          min-height: 40px;
+          font-size: 12px;
+        }
+      }
+
+      /* Small (425px - 768px) */
+      @media (min-width: 426px) and (max-width: 768px) {
+        .main {
+          padding: 16px;
+          padding-bottom: 80px;
+        }
+
+        .employee-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .toolbar {
+          flex-direction: column;
+        }
+      }
+
+      /* Large (1024px+) */
+      @media (min-width: 1025px) {
+        .employee-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+      }
+
+      /* Extra Large (2560px+) */
+      @media (min-width: 2560px) {
+        .main {
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .employee-grid {
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         }
       }
     </style>
