@@ -44,4 +44,5 @@ secrets.json
 # Temporary files
 tmp/
 temp/
-maquetas/*.html
+
+# Note: maquetas/*.html are NOT ignored - they're part of the project documentation
