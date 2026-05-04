@@ -179,7 +179,7 @@ export const InventoryPage: React.FC = () => {
       label: 'Estado',
       sortable: false,
       width: '100px',
-      render: (value: string, row: InventoryItem) =>
+      render: (_value: string, row: InventoryItem) =>
         row.cantidad <= row.stockMinimo ? (
           <Badge label="Bajo Stock" variant="alert" />
         ) : (
