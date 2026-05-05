@@ -1,5 +1,14 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { auth } from '@/services/firebase'
+// @ts-ignore
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  User as FirebaseUser
+} from 'firebase/auth'
 
 interface User {
   uid: string
@@ -10,50 +19,65 @@ interface AuthState {
   user: User | null
   loading: boolean
   error: string | null
+  isInitialized: boolean
 
   signup: (email: string, password: string) => Promise<void>
   login: (email: string, password: string) => Promise<void>
   logout: () => Promise<void>
   setUser: (user: User | null) => void
   clearError: () => void
-  initializeAuth: () => void
+  initializeAuth: () => (() => void) | undefined
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       loading: false,
       error: null,
+      isInitialized: false,
 
       signup: async (email: string, password: string) => {
         try {
           set({ loading: true, error: null })
-          await new Promise(resolve => setTimeout(resolve, 500))
-          set({ user: { uid: 'user-' + Date.now(), email }, loading: false })
-        } catch (error) {
-          set({ error: error instanceof Error ? error.message : 'Signup failed', loading: false })
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+          const firebaseUser = userCredential.user
+          set({
+            user: { uid: firebaseUser.uid, email: firebaseUser.email || '' },
+            loading: false
+          })
+        } catch (error: any) {
+          const errorMessage = error?.message || 'Signup failed'
+          set({ error: errorMessage, loading: false })
+          throw error
         }
       },
 
       login: async (email: string, password: string) => {
         try {
           set({ loading: true, error: null })
-          await new Promise(resolve => setTimeout(resolve, 500))
-          const newUser = { uid: 'user-' + Date.now(), email }
-          set({ user: newUser, loading: false })
-        } catch (error) {
-          set({ error: error instanceof Error ? error.message : 'Login failed', loading: false })
+          const userCredential = await signInWithEmailAndPassword(auth, email, password)
+          const firebaseUser = userCredential.user
+          set({
+            user: { uid: firebaseUser.uid, email: firebaseUser.email || '' },
+            loading: false
+          })
+        } catch (error: any) {
+          const errorMessage = error?.message || 'Login failed'
+          set({ error: errorMessage, loading: false })
+          throw error
         }
       },
 
       logout: async () => {
         try {
           set({ loading: true, error: null })
-          await new Promise(resolve => setTimeout(resolve, 300))
+          await signOut(auth)
           set({ user: null, loading: false })
-        } catch (error) {
-          set({ error: error instanceof Error ? error.message : 'Logout failed', loading: false })
+        } catch (error: any) {
+          const errorMessage = error?.message || 'Logout failed'
+          set({ error: errorMessage, loading: false })
+          throw error
         }
       },
 
@@ -62,7 +86,17 @@ export const useAuthStore = create<AuthState>()(
       clearError: () => set({ error: null }),
 
       initializeAuth: () => {
-        // Firebase Auth initialization can be added here later
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
+          if (firebaseUser) {
+            set({
+              user: { uid: firebaseUser.uid, email: firebaseUser.email || '' },
+              isInitialized: true
+            })
+          } else {
+            set({ user: null, isInitialized: true })
+          }
+        })
+        return unsubscribe
       }
     }),
     {

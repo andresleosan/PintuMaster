@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import LoginPage from '@/components/pages/LoginPage'
+import SignupPage from '@/components/pages/SignupPage'
 import DashboardPage from '@/components/pages/DashboardPage'
 import WorkListPage from '@/components/pages/WorkListPage'
 import WorkCreatePage from '@/components/pages/WorkCreatePage'
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
           {/* Protected Routes (Semana 2+) */}

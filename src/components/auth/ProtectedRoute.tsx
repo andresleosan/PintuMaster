@@ -8,9 +8,9 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   const user = useAuthStore((state) => state.user)
-  const loading = useAuthStore((state) => state.loading)
-  
-  if (loading) {
+  const isInitialized = useAuthStore((state) => state.isInitialized)
+
+  if (!isInitialized) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
         <div className="text-center">
@@ -22,10 +22,10 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
       </div>
     )
   }
-  
+
   if (!user) {
     return <Navigate to="/login" replace />
   }
-  
+
   return element
 }

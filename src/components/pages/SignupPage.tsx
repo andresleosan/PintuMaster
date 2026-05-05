@@ -7,23 +7,29 @@ import { Button, Input } from '@/components/primitives'
 import { useAuthStore } from '@/stores/authStore'
 
 // Schema de validación
-const loginSchema = z.object({
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'Contraseña mínimo 6 caracteres'),
-})
+const signupSchema = z
+  .object({
+    email: z.string().email('Email inválido'),
+    password: z.string().min(6, 'Contraseña mínimo 6 caracteres'),
+    confirmPassword: z.string().min(6, 'Confirmar contraseña'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['confirmPassword'],
+  })
 
-type LoginFormData = z.infer<typeof loginSchema>
+type SignupFormData = z.infer<typeof signupSchema>
 
-const LoginPage: React.FC = () => {
+const SignupPage: React.FC = () => {
   const navigate = useNavigate()
-  const { login, loading, error, clearError, user } = useAuthStore()
+  const { signup, loading, error, clearError, user } = useAuthStore()
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
   })
 
   // Redirect if already logged in
@@ -33,13 +39,13 @@ const LoginPage: React.FC = () => {
     }
   }, [user, navigate])
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: SignupFormData) => {
     try {
       clearError()
-      await login(data.email, data.password)
+      await signup(data.email, data.password)
       navigate('/dashboard')
     } catch (err) {
-      console.error('Login error:', err)
+      console.error('Signup error:', err)
     }
   }
 
@@ -52,12 +58,12 @@ const LoginPage: React.FC = () => {
             <span className="text-2xl font-bold">PM</span>
           </div>
           <h1 className="text-3xl font-bold text-dark mb-2">PintuMaster</h1>
-          <p className="text-gray-600">Gestión de latonería y pintura automotriz</p>
+          <p className="text-gray-600">Crear nueva cuenta</p>
         </div>
 
         {/* Error message */}
         {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded border border-red-200">
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded border border-red-200 text-sm">
             {error}
           </div>
         )}
@@ -82,15 +88,14 @@ const LoginPage: React.FC = () => {
             required
           />
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center cursor-pointer">
-              <input type="checkbox" className="w-4 h-4 mr-2" />
-              <span className="text-gray-700">Recuérdame</span>
-            </label>
-            <a href="#" className="text-primary hover:underline font-semibold">
-              ¿Olvidó contraseña?
-            </a>
-          </div>
+          <Input
+            label="Confirmar Contraseña"
+            type="password"
+            placeholder="••••••••"
+            {...register('confirmPassword')}
+            error={errors.confirmPassword?.message}
+            required
+          />
 
           <Button
             type="submit"
@@ -99,18 +104,20 @@ const LoginPage: React.FC = () => {
             fullWidth
             loading={loading}
           >
-            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
           </Button>
         </form>
 
-        {/* Footer */}
+        {/* Link to login */}
         <p className="text-center text-gray-600 text-sm mt-4">
-          ¿No tienes cuenta?{' '}
-          <Link to="/signup" className="text-primary hover:underline font-semibold">
-            Crea una aquí
+          ¿Ya tienes cuenta?{' '}
+          <Link to="/login" className="text-primary hover:underline font-semibold">
+            Inicia sesión
           </Link>
         </p>
-        <p className="text-center text-gray-600 text-sm mt-2">
+
+        {/* Footer */}
+        <p className="text-center text-gray-600 text-sm mt-4">
           ¿Necesita ayuda? Contacte a{' '}
           <a href="mailto:soporte@pintumaster.com" className="text-primary hover:underline font-semibold">
             soporte@pintumaster.com
@@ -121,4 +128,4 @@ const LoginPage: React.FC = () => {
   )
 }
 
-export default LoginPage
+export default SignupPage
