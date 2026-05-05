@@ -11,6 +11,18 @@ const Header: React.FC<HeaderProps> = ({
   onMenuToggle,
   showMenuToggle = false,
 }) => {
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen()
+      } else {
+        await document.exitFullscreen()
+      }
+    } catch (e) {
+      // ignore errors for browsers that block fullscreen
+    }
+  }
+
   return (
     <header className="header">
       <div className="flex items-center gap-4">
@@ -38,7 +50,11 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-4">
-        <button className="hover:bg-gray-700 p-2 rounded transition">
+        <button
+          title="Alternar pantalla completa"
+          onClick={toggleFullscreen}
+          className="hover:bg-gray-700 p-2 rounded transition"
+        >
           <svg
             className="w-5 h-5"
             fill="none"
