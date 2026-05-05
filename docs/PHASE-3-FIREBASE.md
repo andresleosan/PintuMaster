@@ -7,6 +7,7 @@ Integración de Firebase (Firestore, Auth, Storage) con el proyecto PintuMaster,
 ## ✅ Progreso Completado (May 5, 2026)
 
 ### 1. Firebase SDK Installation & Configuration
+
 - **Installed**: firebase@10.14.1
 - **File**: src/services/firebase.ts
 - **Services Initialized**:
@@ -16,45 +17,45 @@ Integración de Firebase (Firestore, Auth, Storage) con el proyecto PintuMaster,
 - **Credentials**: pintu-master project (from Firebase Console)
 
 ### 2. State Management with Zustand
+
 - **authStore.ts** (Mock Implementation)
   - User state: `{ uid, email }`
   - Methods: signup, login, logout, setUser, clearError, initializeAuth
   - localStorage Persistence: Zustand persist middleware saves user to localStorage
   - Flow: Mock 500ms delay → redirects to /dashboard on success
-  
 - **trabajoStore.ts** (Mock Implementation)
   - Stores: `MOCK_TRABAJOS` array with 6 pre-loaded items
   - Methods: fetchTrabajos, fetchTrabajoById, createTrabajo, updateTrabajo, deleteTrabajo
   - Uses mock in-memory array instead of Firestore queries
-  
 - **financeStore.ts** (Mock Implementation)
   - Stores: `MOCK_INGRESOS` and `MOCK_GASTOS` arrays (empty, ready for data)
   - Methods: fetchIngresos/Gastos, createIngreso/Gasto, updateIngreso/Gasto, deleteIngreso/Gasto
   - Follows same pattern as trabajoStore for consistency
 
 ### 3. Authentication Infrastructure
+
 - **AuthProvider** (src/components/providers/AuthProvider.tsx)
   - Waits for Zustand localStorage rehydration before rendering
   - Prevents flashing of login page during hydration
-  
 - **ProtectedRoute** (src/components/auth/ProtectedRoute.tsx)
   - Route-level auth guard checking `useAuthStore.user`
   - Shows loading spinner while auth initializes
   - Redirects to /login if user is null
   - Renders component if user exists
-  
 - **App.tsx Integration**
   - Wrapped Router with AuthProvider
   - Applied ProtectedRoute to all 12 protected routes
   - Public route: /login (no guard)
-  - Protected routes: /dashboard, /trabajos/*, /finanzas/*, /inventario, /empleados, /reportes
+  - Protected routes: /dashboard, /trabajos/_, /finanzas/_, /inventario, /empleados, /reportes
 
 ### 4. Session Persistence
+
 - **localStorage Strategy**: User object persisted via Zustand persist middleware
 - **Rehydration**: Automatic on app load from localStorage key 'auth-storage'
 - **Validation**: Session persists across page reloads (tested ✓)
 
 ### 5. TypeScript Configuration
+
 - **Original Issue**: Module resolution errors with Firebase imports
 - **Solution Applied**:
   - Set `strict: false` (was `true`)
@@ -64,8 +65,9 @@ Integración de Firebase (Firestore, Auth, Storage) con el proyecto PintuMaster,
 - **Result**: No compilation errors with Firebase SDK
 
 ### 6. Browser Testing ✓
+
 - **LoginPage**: Renders form correctly
-- **Authentication Flow**: 
+- **Authentication Flow**:
   - ✓ Login with any email/password accepts
   - ✓ 500ms mock delay shown
   - ✓ Automatic redirect to /dashboard
@@ -80,6 +82,7 @@ Integración de Firebase (Firestore, Auth, Storage) con el proyecto PintuMaster,
   - ✓ /dashboard loads with summary statistics
 
 ### 7. Build Verification ✓
+
 - **Build Output**:
   ```
   vite v5.4.21 building for production...
@@ -91,6 +94,7 @@ Integración de Firebase (Firestore, Auth, Storage) con el proyecto PintuMaster,
 - **Console Errors**: None (only Router v7 future flag warnings)
 
 ### 8. Git Commit ✓
+
 - **Commit Hash**: d4b1f77
 - **Message**: "feat(phase3): Firebase SDK integration with mock stores and session persistence"
 - **Files Changed**: 13 (7 new, 6 modified)
@@ -99,6 +103,7 @@ Integración de Firebase (Firestore, Auth, Storage) con el proyecto PintuMaster,
 ## 🔄 Current Application State
 
 ### Routes (12 Total)
+
 ```
 PUBLIC:
   /login                          → LoginPage
@@ -117,13 +122,15 @@ PROTECTED (all guard with ProtectedRoute):
 ```
 
 ### Data Stores Status
-| Store | Type | Status | Ready |
-|-------|------|--------|-------|
-| authStore | User { uid, email } | Mock + localStorage | ✓ Yes |
-| trabajoStore | 6 trabajos array | Mock in-memory | ✓ Yes |
+
+| Store        | Type                   | Status                 | Ready |
+| ------------ | ---------------------- | ---------------------- | ----- |
+| authStore    | User { uid, email }    | Mock + localStorage    | ✓ Yes |
+| trabajoStore | 6 trabajos array       | Mock in-memory         | ✓ Yes |
 | financeStore | ingresos/gastos arrays | Mock in-memory (empty) | ✓ Yes |
 
 ### UI/UX Features Working
+
 - Authentication form validation
 - Session persistence across reloads
 - Protected route redirection
@@ -134,6 +141,7 @@ PROTECTED (all guard with ProtectedRoute):
 ## ⏳ Next Steps (Phase 3 Continuation)
 
 ### Priority 1: Replace Mock Stores with Real Firebase (CRITICAL)
+
 ```typescript
 // authStore Changes Needed:
 - createUserWithEmailAndPassword() → Firebase Auth
@@ -151,18 +159,21 @@ PROTECTED (all guard with ProtectedRoute):
 ```
 
 ### Priority 2: Connect Data Pages to Stores
+
 - DashboardPage: Fetch stats from stores on mount
 - WorkListPage: Call fetchTrabajos(userId) on mount
 - FinancesPage: Call fetchIngresos and fetchGastos on mount
 - Detail pages: Fetch single item by ID
 
 ### Priority 3: Form Submission Handlers
+
 - WorkCreatePage: submit → store.createTrabajo()
 - IncomeCreatePage: submit → store.createIngreso()
 - ExpenseCreatePage: submit → store.createGasto()
 - Add toast notifications for success/error
 
 ### Priority 4: Firestore Collections Validation
+
 ```
 Required Collections:
   ✓ trabajos (user-created in Firebase Console)
@@ -176,6 +187,7 @@ Required Fields (per document):
 ```
 
 ### Priority 5: Security Rules Configuration
+
 ```firestore
 // Required rules (userId-based access):
 match /trabajos/{document=**} {
@@ -192,17 +204,20 @@ match /gastos/{document=**} {
 ## 📦 Dependencies
 
 ### Core
+
 - firebase: ^10.14.1 ✓ Installed
 - zustand: ^4.4.0 ✓ Installed
 - react: ^18.2.0 ✓ Installed
 - react-router-dom: ^6.20.0 ✓ Installed
 
 ### Build Tools
+
 - vite: ^5.0.0 ✓ Working
 - typescript: ^5.2.0 ✓ Configured
 - tailwindcss: ^3.3.0 ✓ Installed
 
 ### Known Issues
+
 - 12 npm audit vulnerabilities (11 moderate, 1 high) - not addressed yet
 - Firebase TypeScript strict mode required relaxing
 
@@ -234,10 +249,9 @@ match /gastos/{document=**} {
 - GitHub Repo: https://github.com/andresleosan/PintuMaster
 - Branch: main
 - Latest Commit: d4b1f77 (May 5, 2026)
-
-   - WorkCreatePage: Guardar en Firestore
-   - IncomeCreatePage: Guardar ingresos
-   - ExpenseCreatePage: Guardar gastos
+  - WorkCreatePage: Guardar en Firestore
+  - IncomeCreatePage: Guardar ingresos
+  - ExpenseCreatePage: Guardar gastos
 
 4. **Firestore Rules**
    - Configurar reglas de seguridad
