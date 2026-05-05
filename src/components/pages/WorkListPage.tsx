@@ -7,10 +7,10 @@ import { Trabajo } from '@/types/models'
 
 const MOCK_TRABAJOS: Trabajo[] = [
   { id: '1', userId: 'user1', placa: 'ABC-123', cliente: 'Juan Perez', tipo: 'Pintura', estado: 'En proceso', precio: 150000, fecha: '2026-05-01', descripcion: 'Repintado completo del vehiculo' },
-  { id: '2', userId: 'user1', placa: 'DEF-456', cliente: 'Maria Gonzalez', tipo: 'Restauracion', estado: 'Pintura', precio: 450000, fecha: '2026-05-02', descripcion: 'Restauracion de carroceria y pintura' },
+  { id: '2', userId: 'user1', placa: 'DEF-456', cliente: 'Maria Gonzalez', tipo: 'Restauración', estado: 'Pintura', precio: 450000, fecha: '2026-05-02', descripcion: 'Restauracion de carroceria y pintura' },
   { id: '3', userId: 'user1', placa: 'GHI-789', cliente: 'Carlos Lopez', tipo: 'Mantenimiento', estado: 'Terminado', precio: 85000, fecha: '2026-04-28', descripcion: 'Servicio de mantenimiento general' },
   { id: '4', userId: 'user1', placa: 'JKL-012', cliente: 'Ana Rodriguez', tipo: 'Pintura', estado: 'Pendiente', precio: 200000, fecha: '2026-05-05', descripcion: 'Pintura de capo y parachoques' },
-  { id: '5', userId: 'user1', placa: 'MNO-345', cliente: 'Roberto Silva', tipo: 'Restauracion', estado: 'En proceso', precio: 520000, fecha: '2026-05-03', descripcion: 'Trabajo completo de restauracion' },
+  { id: '5', userId: 'user1', placa: 'MNO-345', cliente: 'Roberto Silva', tipo: 'Restauración', estado: 'En proceso', precio: 520000, fecha: '2026-05-03', descripcion: 'Trabajo completo de restauracion' },
   { id: '6', userId: 'user1', placa: 'PQR-678', cliente: 'Laura Garcia', tipo: 'Pintura', estado: 'Terminado', precio: 120000, fecha: '2026-04-25', descripcion: 'Pintura de puertas y techo' },
 ]
 
