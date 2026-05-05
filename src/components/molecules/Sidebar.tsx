@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../../stores/authStore'
 
 interface NavItem {
   label: string
@@ -28,7 +29,18 @@ const Sidebar: React.FC<SidebarProps> = ({
   items = defaultItems,
 }) => {
   const location = useLocation()
+  const navigate = useNavigate()
+  const { logout } = useAuthStore()
   const isActive = (path: string) => location.pathname === path
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+  }
 
   return (
     <>
@@ -93,7 +105,10 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Footer */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-700">
-          <button className="w-full bg-primary hover:bg-red-700 text-white py-2 rounded transition">
+          <button 
+            onClick={handleLogout}
+            className="w-full bg-primary hover:bg-red-700 text-white py-2 rounded transition"
+          >
             Cerrar Sesión
           </button>
         </div>
