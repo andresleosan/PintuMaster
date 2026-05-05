@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Layout } from '@/components/organisms'
 import { DataTable, Select } from '@/components/molecules'
 import { Card, Badge, Button } from '@/components/primitives'
@@ -100,6 +101,7 @@ const MOCK_INVENTORY: InventoryItem[] = [
 export const InventoryPage: React.FC = () => {
   const [filterCategory, setFilterCategory] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
+  const navigate = useNavigate()
 
   const categories = Array.from(
     new Set(MOCK_INVENTORY.map((item) => item.categoria))
@@ -234,7 +236,7 @@ export const InventoryPage: React.FC = () => {
             value={filterCategory}
             onChange={(val) => setFilterCategory(String(val))}
           />
-          <Button variant="primary" size="md">
+          <Button variant="primary" size="md" onClick={() => navigate('/inventario/crear')}>
             + Nuevo Item
           </Button>
         </div>

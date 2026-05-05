@@ -11,6 +11,9 @@ import FinancesPage from '@/components/pages/FinancesPage'
 import IncomeCreatePage from '@/components/pages/IncomeCreatePage'
 import ExpenseCreatePage from '@/components/pages/ExpenseCreatePage'
 import InventoryPage from '@/components/pages/InventoryPage'
+import EmployeesPage from '@/components/pages/EmployeesPage'
+import ReportsPage from '@/components/pages/ReportsPage'
+import InventoryCreatePage from '@/components/pages/InventoryCreatePage'
 
 function App() {
   return (
@@ -39,8 +42,11 @@ function App() {
           <Route path="/inventario" element={<ProtectedRoute element={<InventoryPage />} />} />
           
           {/* Other Routes */}
-          <Route path="/empleados" element={<ProtectedRoute element={<DashboardPage />} />} />
-          <Route path="/reportes" element={<ProtectedRoute element={<DashboardPage />} />} />
+          <Route path="/empleados" element={<ProtectedRoute element={<EmployeesPage />} />} />
+          <Route path="/reportes" element={<ProtectedRoute element={<ReportsPage />} />} />
+
+          {/* Inventory create (placeholder) */}
+          <Route path="/inventario/crear" element={<ProtectedRoute element={<InventoryCreatePage />} />} />
 
           {/* Catch all */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Layout from '@/components/organisms/Layout'
 import Card from '@/components/primitives/Card'
 import Badge from '@/components/primitives/Badge'
@@ -55,6 +56,11 @@ const DashboardPage: React.FC = () => {
       fecha: '2026-05-02',
     },
   ]
+
+  const navigate = useNavigate()
+
+  const handleCreateTrabajo = () => navigate('/trabajos/crear')
+  const handleRegistrarIngreso = () => navigate('/finanzas/ingreso/crear')
 
   return (
     <Layout title="Dashboard">
@@ -154,7 +160,7 @@ const DashboardPage: React.FC = () => {
               <p className="text-sm opacity-90 mb-4">
                 Registra un nuevo vehiculo para reparación
               </p>
-              <button className="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded font-semibold transition">
+              <button onClick={handleCreateTrabajo} className="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded font-semibold transition">
                 Crear
               </button>
             </div>
@@ -166,7 +172,7 @@ const DashboardPage: React.FC = () => {
               <p className="text-sm opacity-90 mb-4">
                 Añade un nuevo pago o ingreso
               </p>
-              <button className="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded font-semibold transition">
+              <button onClick={handleRegistrarIngreso} className="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded font-semibold transition">
                 Registrar
               </button>
             </div>

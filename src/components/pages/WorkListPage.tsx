@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Layout } from '@/components/organisms'
 import { Tabs, DataTable } from '@/components/molecules'
 import { Badge, Button } from '@/components/primitives'
@@ -76,6 +77,7 @@ const MOCK_TRABAJOS: Trabajo[] = [
 export const WorkListPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
+  const navigate = useNavigate()
 
   const tabs = [
     { id: 'all', label: 'Todos', count: MOCK_TRABAJOS.length },
@@ -181,7 +183,7 @@ export const WorkListPage: React.FC = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
           />
-          <Button variant="primary" size="md">
+          <Button variant="primary" size="md" onClick={() => navigate('/trabajos/crear')}>
             + Nuevo Trabajo
           </Button>
         </div>
