@@ -7,6 +7,7 @@ import { Trabajo } from '@/types/models'
 const MOCK_TRABAJOS: Trabajo[] = [
   {
     id: '1',
+    userId: 'user1',
     placa: 'ABC-123',
     cliente: 'Juan Pérez',
     tipo: 'Pintura',
@@ -17,6 +18,7 @@ const MOCK_TRABAJOS: Trabajo[] = [
   },
   {
     id: '2',
+    userId: 'user1',
     placa: 'DEF-456',
     cliente: 'María González',
     tipo: 'Restauración',
@@ -27,6 +29,7 @@ const MOCK_TRABAJOS: Trabajo[] = [
   },
   {
     id: '3',
+    userId: 'user1',
     placa: 'GHI-789',
     cliente: 'Carlos López',
     tipo: 'Mantenimiento',
@@ -37,6 +40,7 @@ const MOCK_TRABAJOS: Trabajo[] = [
   },
   {
     id: '4',
+    userId: 'user1',
     placa: 'JKL-012',
     cliente: 'Ana Rodríguez',
     tipo: 'Pintura',
@@ -47,6 +51,7 @@ const MOCK_TRABAJOS: Trabajo[] = [
   },
   {
     id: '5',
+    userId: 'user1',
     placa: 'MNO-345',
     cliente: 'Roberto Silva',
     tipo: 'Restauración',
@@ -57,6 +62,7 @@ const MOCK_TRABAJOS: Trabajo[] = [
   },
   {
     id: '6',
+    userId: 'user1',
     placa: 'PQR-678',
     cliente: 'Laura García',
     tipo: 'Pintura',

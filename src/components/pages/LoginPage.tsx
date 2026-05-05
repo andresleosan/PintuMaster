@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useNavigate } from 'react-router-dom'
 import { Button, Input } from '@/components/primitives'
+import { useAuthStore } from '@/stores/authStore'
 
 // Schema de validación
 const loginSchema = z.object({
@@ -13,8 +15,8 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>
 
 const LoginPage: React.FC = () => {
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const { login, loading, error, clearError, user } = useAuthStore()
 
   const {
     register,
@@ -24,19 +26,20 @@ const LoginPage: React.FC = () => {
     resolver: zodResolver(loginSchema),
   })
 
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard')
+    }
+  }, [user, navigate])
+
   const onSubmit = async (data: LoginFormData) => {
-    setLoading(true)
-    setError(null)
     try {
-      // Mock login - en Phase 3 se conectaría a Firebase
-      console.log('Login:', data)
-      // Simulamos un delay de red
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      alert('Login exitoso (mock)')
+      clearError()
+      await login(data.email, data.password)
+      navigate('/dashboard')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido')
-    } finally {
-      setLoading(false)
+      console.error('Login error:', err)
     }
   }
 
