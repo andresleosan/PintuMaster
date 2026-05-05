@@ -4,6 +4,8 @@
 **Estado:** 🟡 EN PROGRESO — Fase 1.2 (Aprobación sistema diseño)  
 **Última actualización:** 3 de mayo de 2026
 
+**Enlace de producción:** https://dash.cloudflare.com/05fb22c155667de064b55c4e287b21d8/workers/services/view/pintumaster/production/builds/a75f1ef5-655e-402a-93e3-cd2409670ed6
+
 ---
 
 ## 🎯 DESCRIPCIÓN DEL PROYECTO

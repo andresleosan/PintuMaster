@@ -3,6 +3,8 @@
 **Última actualización:** 4 de mayo de 2026 - 16:50  
 **Estado actual:** Phase 2 — React + TypeScript Implementation (✅ SEMANA 3 COMPLETADA)
 
+**Enlace de producción:** https://dash.cloudflare.com/05fb22c155667de064b55c4e287b21d8/workers/services/view/pintumaster/production/builds/a75f1ef5-655e-402a-93e3-cd2409670ed6
+
 ---
 
 ## 🎯 ESTADO ACTUAL DEL PROYECTO
