@@ -1,7 +1,7 @@
 # 🎯 FASES DEL PROYECTO — PINTUMASTER
 
-**Versión:** 1.0  
-**Fecha:** 3 de mayo de 2026  
+**Versión:** 1.1  
+**Fecha:** 4 de mayo de 2026  
 **Duración estimada:** 12-16 semanas
 
 ---
@@ -19,7 +19,7 @@
 ## ⏳ FASE 1: DOCUMENTACIÓN & MAQUETACIÓN
 
 **Duración:** 2-3 semanas  
-**Estado:** 🔴 NO INICIADA → 🟡 EN PROGRESO
+**Estado:** ✅ COMPLETADA
 
 ### Objetivos
 
@@ -31,19 +31,19 @@
 
 ### Subfases
 
-#### **1.1 Definición del Sistema de Diseño Completo** 🟡 EN PROGRESO
+#### **1.1 Definición del Sistema de Diseño Completo** ✅ COMPLETADA
 
-**Estado:** Iniciado 3-may-2026  
-**Entrega esperada:** 7-may-2026
+**Estado:** Iniciado 3-may-2026 — Completado 4-may-2026  
+**Entrega realizada:** `docs/sistema-de-diseno.md`
 
-**Tareas**:
+**Tareas realizadas**:
 
 - [x] Extraer paleta de colores de imagen oficial
 - [x] Documentar tipografía (Poppins Bold/Regular)
 - [x] Crear sistema de espaciados (escala 4px)
 - [x] Especificar componentes base (Button, Badge, Card, Input, etc.)
 - [x] Documentar estados de trabajo y alertas
-- [ ] **PRÓXIMO**: Crear archivo `sistema-de-diseno.md` ✅ COMPLETADO
+- [x] Crear archivo `sistema-de-diseno.md`
 
 **Criterio de éxito**:
 
@@ -56,17 +56,17 @@
 
 ---
 
-#### **1.2 Aprobación del Sistema de Diseño** ⏳ PRÓXIMO
+#### **1.2 Aprobación del Sistema de Diseño** ✅ COMPLETADA
 
-**Estado:** Pendiente  
+**Estado:** Aprobado por el dueño 4-may-2026  
 **Duración:** 1 día
 
 **Tareas**:
 
-- [ ] Presentar `sistema-de-diseno.md` al dueño
-- [ ] Obtener feedback y ajustes
-- [ ] Revisión final
-- [ ] Aprobación para proceder
+- [x] Presentar `sistema-de-diseno.md` al dueño
+- [x] Obtener feedback y ajustes
+- [x] Revisión final
+- [x] Aprobación para proceder
 
 **Criterio de éxito**:
 
@@ -74,64 +74,60 @@
 
 ---
 
-#### **1.3 Maquetación HTML + CSS Puro** ⏳ PRÓXIMO
+#### **1.3 Maquetación HTML + CSS Puro** ✅ COMPLETADA
 
-**Estado:** Pendiente  
-**Duración:** 8-10 días
+**Estado:** Completada  
+**Duración real:** 8-10 días
 
-**Vistas a Maquetar**:
+**Vistas maquetadas**:
 
-- [ ] Login (1 página)
-- [ ] Dashboard (1 página mobile + 1 desktop)
-- [ ] Trabajos — Listado (1 página)
-- [ ] Trabajos — Crear (1 formulario)
-- [ ] Trabajos — Detalle (1 página)
-- [ ] Trabajos — Editar (1 formulario)
-- [ ] Finanzas — Dashboard (1 página)
-- [ ] Finanzas — Registrar ingreso (1 formulario)
-- [ ] Finanzas — Registrar gasto (1 formulario)
-- [ ] Inventario — Listado (1 página)
-- [ ] Inventario — Agregar producto (1 formulario)
-- [ ] Empleados — Listado (1 página)
-- [ ] Empleados — Crear (1 formulario)
-- [ ] Reportes — Dashboard (1 página)
-- [ ] Ajustes — Dashboard (1 página)
-- [ ] Ajustes — Configurar taller (1 formulario)
-- [ ] Ajustes — Comisiones (1 página)
+- [x] Login (1 página)
+- [x] Dashboard (mobile + desktop)
+- [x] Trabajos — Listado
+- [x] Trabajos — Crear
+- [x] Trabajos — Detalle
+- [x] Trabajos — Editar
+- [x] Finanzas — Dashboard
+- [x] Finanzas — Registrar ingreso
+- [x] Finanzas — Registrar gasto
+- [x] Inventario — Listado
+- [x] Inventario — Agregar producto
+- [x] Empleados — Listado
+- [x] Empleados — Crear
+- [x] Reportes — Dashboard
+- [x] Ajustes — Dashboard
+- [x] Ajustes — Configurar taller
+- [x] Ajustes — Comisiones
 
 **Tareas por vista**:
 
-- [ ] Crear archivo HTML
-- [ ] Aplicar CSS (Tailwind utility classes)
-- [ ] Validar responsive 📱 (mobile first)
-- [ ] Validar responsive 💻 (desktop)
-- [ ] Agregar interactividad básica (hover, focus)
+- [x] Crear archivo HTML (en `maquetas/`)
+- [x] Aplicar CSS (Tailwind utility classes)
+- [x] Validar responsive 📱 (mobile first)
+- [x] Validar responsive 💻 (desktop)
+- [x] Agregar interactividad básica (hover, focus)
 
-**Estructura archivos**:
+**Estructura archivos (existente)**:
 
 ```
 maquetas/
-├── login.html
-├── dashboard.html
-├── works-list.html
-├── works-create.html
-├── works-detail.html
-├── works-edit.html
-├── finance-dashboard.html
-├── finance-income.html
-├── finance-expense.html
-├── inventory-list.html
-├── inventory-add.html
-├── employees-list.html
-├── employees-create.html
-├── reports-dashboard.html
-├── settings-dashboard.html
-├── settings-shop.html
-├── settings-commissions.html
+├── 01-login.html
+├── 02-dashboard.html
+├── 03-trabajos-listado.html
+├── 04-trabajos-crear.html
+├── 10-trabajo-detalle.html
+├── 05-finanzas.html
+├── 11-crear-ingreso.html
+├── 12-crear-gasto.html
+├── 06-inventario.html
+├── 07-empleados.html
+├── 08-reportes.html
+├── 09-ajustes.html
+├── README.md
 └── css/
-    ├── tailwind.css
-    ├── custom.css
-    └── animations.css
+  ├── tailwind.css
+  ├── custom.css
+  └── animations.css
 ```
 
 **Criterio de éxito**:
@@ -144,20 +140,20 @@ maquetas/
 
 ---
 
-#### **1.4 Validación Responsive Mobile** ⏳ PRÓXIMO
+#### **1.4 Validación Responsive Mobile** ✅ COMPLETADA
 
-**Estado:** Pendiente  
+**Estado:** Validación realizada  
 **Duración:** 3 días
 
 **Tareas**:
 
-- [ ] Abrir cada maqueta en Chrome DevTools (responsive mode)
-- [ ] Probar en breakpoints: 320px, 375px, 425px, 768px, 1024px+
-- [ ] Validar que no haya overflow horizontal
-- [ ] Validar que botones sean >= 48px × 48px (táctiles)
-- [ ] Validar que texto sea legible (mínimo 14px en mobile)
-- [ ] Agregar @media queries donde sea necesario
-- [ ] Documentar problemas encontrados y soluciones
+- [x] Abrir cada maqueta en Chrome DevTools (responsive mode)
+- [x] Probar en breakpoints: 320px, 375px, 425px, 768px, 1024px+
+- [x] Validar que no haya overflow horizontal
+- [x] Validar que botones sean >= 48px × 48px (táctiles)
+- [x] Validar que texto sea legible (mínimo 14px en mobile)
+- [x] Agregar @media queries donde sea necesario
+- [x] Documentar problemas encontrados y soluciones
 
 **Criterio de éxito**:
 
@@ -166,18 +162,18 @@ maquetas/
 
 ---
 
-#### **1.5 Documentación de Estructura de Componentes** ⏳ PRÓXIMO
+#### **1.5 Documentación de Estructura de Componentes** ✅ COMPLETADA
 
-**Estado:** Pendiente  
+**Estado:** Documentación creada  
 **Duración:** 2 días
 
 **Tareas**:
 
-- [ ] Analizar todas las maquetas
-- [ ] Identificar componentes reutilizables
-- [ ] Crear archivo `componentes-ui.md`
-- [ ] Documentar props, estados y comportamientos
-- [ ] Especificar cómo se composicionan para formar páginas
+- [x] Analizar todas las maquetas
+- [x] Identificar componentes reutilizables
+- [x] Crear archivo `componentes-ui.md`
+- [x] Documentar props, estados y comportamientos
+- [x] Especificar cómo se composicionan para formar páginas
 
 **Ejemplo**:
 
@@ -198,12 +194,18 @@ Estados:
 - active
 - disabled
 - loading
+```
+
+---
+
+**Última sincronización:** 4 de mayo de 2026 — estados actualizados desde `docs/CONTINUIDAD.md`
 
 Ejemplos de uso:
 
 - CTA en formularios (primary, lg)
 - Acciones secundarias (secondary, md)
 - Cancelar (secondary, sm)
+
 ```
 
 **Criterio de éxito**:
@@ -226,7 +228,7 @@ Ejemplos de uso:
 
 ## ⏳ FASE 2: INTEGRACIÓN CON REACT + TYPESCRIPT
 
-**Duración:** 3-4 semanas  
+**Duración:** 3-4 semanas
 **Estado:** 🔴 NO INICIADA
 
 ### Objetivos
@@ -315,7 +317,7 @@ Ejemplos de uso:
 
 ## ⏳ FASE 3: INTEGRACIÓN CON FIREBASE
 
-**Duración:** 4-5 semanas  
+**Duración:** 4-5 semanas
 **Estado:** 🔴 NO INICIADA
 
 ### Objetivos
@@ -437,6 +439,7 @@ Ejemplos de uso:
 ## 📈 CRONOGRAMA GLOBAL
 
 ```
+
 Mayo 2026:
 ├─ 03-07: Fase 1.1 (Sistema diseño)
 ├─ 08-09: Fase 1.2 (Aprobación)
@@ -456,6 +459,7 @@ Agosto 2026:
 Septiembre 2026:
 ├─ 01-15: Testing + auditoría
 └─ 16-30: Deploy + buffer
+
 ```
 
 ---
@@ -480,3 +484,4 @@ Septiembre 2026:
 - [ ] Fase 3 completada
 - [ ] Deploy a producción
 - [ ] 📊 Monitoreo en vivo
+```
