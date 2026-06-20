@@ -71,21 +71,6 @@ const EmployeesPage: React.FC = () => {
       emp.email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const getRolColor = (rol: string) => {
-    switch (rol) {
-      case 'Técnico Senior':
-        return 'bg-blue-100 text-blue-700'
-      case 'Técnico':
-        return 'bg-green-100 text-green-700'
-      case 'Aprendiz':
-        return 'bg-yellow-100 text-yellow-700'
-      case 'Administrador':
-        return 'bg-purple-100 text-purple-700'
-      default:
-        return 'bg-gray-100 text-gray-700'
-    }
-  }
-
   return (
     <Layout title="Empleados">
       <div className="space-y-6">

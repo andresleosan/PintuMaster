@@ -1,18 +1,15 @@
 import { initializeApp } from 'firebase/app'
-// @ts-ignore
 import { getAuth } from 'firebase/auth'
-// @ts-ignore
 import { getFirestore } from 'firebase/firestore'
-// @ts-ignore
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC66CuEa4-bMpTQuyHuVz7_pwJzDy85kr8",
-  authDomain: "pintu-master.firebaseapp.com",
-  projectId: "pintu-master",
-  storageBucket: "pintu-master.firebasestorage.app",
-  messagingSenderId: "932975429306",
-  appId: "1:932975429306:web:be30980ee2a200982f2483"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 // Initialize Firebase

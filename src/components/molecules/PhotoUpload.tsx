@@ -87,6 +87,7 @@ export const PhotoUpload: React.FC<PhotoUploadProps> = ({
             <img
               src={previewUrl}
               alt="Preview"
+              loading="lazy"
               className="w-full h-full object-cover rounded-lg border border-gray-300"
             />
             <button

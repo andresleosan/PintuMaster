@@ -47,26 +47,29 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
       })
     }, [data, sortKey, sortOrder])
 
+    const totalPages = useMemo(
+      () => Math.ceil(sortedData.length / itemsPerPage),
+      [sortedData.length, itemsPerPage]
+    )
+
     const paginatedData = useMemo(() => {
       const start = (currentPage - 1) * itemsPerPage
       return sortedData.slice(start, start + itemsPerPage)
     }, [sortedData, currentPage, itemsPerPage])
 
-    const totalPages = Math.ceil(sortedData.length / itemsPerPage)
-
-    const handleSort = (colKey: string) => {
-      if (sortKey === colKey) {
-        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-      } else {
-        setSortKey(colKey)
-        setSortOrder('asc')
-      }
+    const handleSort = React.useCallback((colKey: string) => {
+      setSortKey((prev) => {
+        setSortOrder((prevOrder) => prev === colKey ? (prevOrder === 'asc' ? 'desc' : 'asc') : 'asc')
+        return colKey
+      })
       setCurrentPage(1)
-    }
+    }, [])
 
-    const checkboxCol = columns.find((c) => c.label === '' && c.mobileHidden)
-    const actionCols = columns.filter((c) => c.mobileHidden && c.label !== '')
-    const visibleMobileCols = columns.filter((c) => !c.mobileHidden)
+    const { checkboxCol, actionCols, visibleMobileCols } = useMemo(() => ({
+      checkboxCol: columns.find((c) => c.label === '' && c.mobileHidden),
+      actionCols: columns.filter((c) => c.mobileHidden && c.label !== ''),
+      visibleMobileCols: columns.filter((c) => !c.mobileHidden),
+    }), [columns])
 
     if (isLoading) {
       return (
@@ -88,7 +91,11 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
       )
     }
 
-    const pagination = showPagination && totalPages > 1 && (
+    const handlePageChange = React.useCallback((page: number) => {
+      setCurrentPage(page)
+    }, [])
+
+    const pagination = useMemo(() => showPagination && totalPages > 1 && (
       <div className="px-4 sm:px-6 py-4 border-t border-gray-200 bg-gray-50">
         <div className="flex items-center justify-between gap-2">
           <p className="text-gray-600 text-xs whitespace-nowrap">
@@ -96,7 +103,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
           </p>
           <div className="flex gap-1">
             <button
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
               className="px-2 py-1 rounded border border-gray-300 disabled:opacity-50 text-xs"
             >
@@ -109,7 +116,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
-                  onClick={() => setCurrentPage(page)}
+                  onClick={() => handlePageChange(page)}
                   className={`px-3 py-1 rounded text-xs ${
                     page === currentPage
                       ? 'bg-primary text-white'
@@ -121,7 +128,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
               ))}
             </div>
             <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}
               className="px-2 py-1 rounded border border-gray-300 disabled:opacity-50 text-xs"
             >
@@ -130,7 +137,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
           </div>
         </div>
       </div>
-    )
+    ), [showPagination, totalPages, currentPage, itemsPerPage, sortedData.length, handlePageChange])
 
     return (
       <div ref={ref} className="rounded-lg border border-gray-200 bg-white">
