@@ -86,6 +86,10 @@ export const useAuthStore = create<AuthState>()(
       clearError: () => set({ error: null }),
 
       initializeAuth: () => {
+        if (!auth) {
+          set({ isInitialized: true })
+          return undefined
+        }
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
           if (firebaseUser) {
             set({

@@ -12,12 +12,23 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig)
+export const isConfigValid = !!firebaseConfig.apiKey && firebaseConfig.apiKey.trim() !== ''
 
-// Initialize Firebase services
-export const auth = getAuth(app)
-export const db = getFirestore(app)
-export const storage = getStorage(app)
+let app: any = null
+let auth: any = null
+let db: any = null
+let storage: any = null
 
+if (isConfigValid) {
+  try {
+    app = initializeApp(firebaseConfig)
+    auth = getAuth(app)
+    db = getFirestore(app)
+    storage = getStorage(app)
+  } catch (error) {
+    console.error('Firebase initialization failed:', error)
+  }
+}
+
+export { app, auth, db, storage }
 export default app
