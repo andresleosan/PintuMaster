@@ -1,7 +1,7 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
+import { initializeApp, type FirebaseApp } from 'firebase/app'
+import { getAuth, type Auth } from 'firebase/auth'
+import { getFirestore, type Firestore } from 'firebase/firestore'
+import { getStorage, type FirebaseStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -14,10 +14,10 @@ const firebaseConfig = {
 
 export const isConfigValid = !!firebaseConfig.apiKey && firebaseConfig.apiKey.trim() !== ''
 
-let app: any = null
-let auth: any = null
-let db: any = null
-let storage: any = null
+let app: FirebaseApp | null = null
+let auth: Auth | null = null
+let db: Firestore | null = null
+let storage: FirebaseStorage | null = null
 
 if (isConfigValid) {
   try {
@@ -32,3 +32,13 @@ if (isConfigValid) {
 
 export { app, auth, db, storage }
 export default app
+
+export function requireAuth(): Auth {
+  if (!auth) throw new Error('Firebase authentication is not configured')
+  return auth
+}
+
+export function requireDb(): Firestore {
+  if (!db) throw new Error('Firestore is not configured')
+  return db
+}

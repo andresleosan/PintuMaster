@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { db } from '@/services/firebase'
+import { requireDb } from '@/services/firebase'
 import {
   collection,
   getDocs,
@@ -15,7 +15,7 @@ import {
 } from 'firebase/firestore'
 import { Trabajo } from '@/types/models'
 
-const trabajosCol = collection(db, 'trabajos')
+const trabajosCol = collection(requireDb(), 'trabajos')
 
 export function useTrabajos(userId: string | undefined) {
   return useQuery({
@@ -35,7 +35,7 @@ export function useTrabajoById(id: string | undefined) {
     queryKey: ['trabajo', id],
     queryFn: async () => {
       if (!id) return null
-      const ref = doc(db, 'trabajos', id)
+      const ref = doc(requireDb(), 'trabajos', id)
       const snap = await getDoc(ref)
       if (!snap.exists()) return null
       return { id: snap.id, ...snap.data() } as Trabajo
@@ -62,7 +62,7 @@ export function useUpdateTrabajo() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Trabajo> }) => {
-      const ref = doc(db, 'trabajos', id)
+      const ref = doc(requireDb(), 'trabajos', id)
       await updateDoc(ref, data)
     },
     onSuccess: () => {
@@ -75,7 +75,7 @@ export function useDeleteTrabajo() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      const ref = doc(db, 'trabajos', id)
+      const ref = doc(requireDb(), 'trabajos', id)
       await deleteDoc(ref)
     },
     onSuccess: () => {

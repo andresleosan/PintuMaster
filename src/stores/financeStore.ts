@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { Ingreso, Gasto } from '@/types/models'
-import { db } from '@/services/firebase'
+import { requireDb } from '@/services/firebase'
 import {
   collection,
   getDocs,
@@ -43,13 +43,13 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   fetchIngresos: async (userId: string) => {
     try {
       set({ loading: true, error: null })
-      const ingresosCol = collection(db, 'ingresos')
+      const ingresosCol = collection(requireDb(), 'ingresos')
       const q = query(ingresosCol, where('userId', '==', userId), orderBy('fecha', 'desc'))
       const snap = await getDocs(q)
-      const ingresos: Ingreso[] = snap.docs.map((d) => ({ id: d.id, ...(d.data() as any) }))
+      const ingresos: Ingreso[] = snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Ingreso, 'id'>) }))
       set({ ingresos })
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al obtener ingresos' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al obtener ingresos' })
     } finally {
       set({ loading: false })
     }
@@ -58,14 +58,14 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   createIngreso: async (ingreso: Omit<Ingreso, 'id'>) => {
     try {
       set({ loading: true, error: null })
-      const ingresosCol = collection(db, 'ingresos')
+      const ingresosCol = collection(requireDb(), 'ingresos')
       const toSave = { ...ingreso, createdAt: serverTimestamp() }
       const ref = await addDoc(ingresosCol, toSave)
       const id = ref.id
       set((state) => ({ ingresos: [{ id, ...ingreso } as Ingreso, ...state.ingresos] }))
       return id
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al crear ingreso' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al crear ingreso' })
       throw error
     } finally {
       set({ loading: false })
@@ -75,11 +75,11 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   updateIngreso: async (id: string, ingreso: Partial<Ingreso>) => {
     try {
       set({ loading: true, error: null })
-      const ref = doc(db, 'ingresos', id)
+      const ref = doc(requireDb(), 'ingresos', id)
       await updateDoc(ref, { ...ingreso })
       set((state) => ({ ingresos: state.ingresos.map((i) => (i.id === id ? { ...i, ...ingreso } : i)) }))
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al actualizar ingreso' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al actualizar ingreso' })
       throw error
     } finally {
       set({ loading: false })
@@ -89,11 +89,11 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   deleteIngreso: async (id: string) => {
     try {
       set({ loading: true, error: null })
-      const ref = doc(db, 'ingresos', id)
+      const ref = doc(requireDb(), 'ingresos', id)
       await deleteDoc(ref)
       set((state) => ({ ingresos: state.ingresos.filter((i) => i.id !== id) }))
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al eliminar ingreso' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al eliminar ingreso' })
       throw error
     } finally {
       set({ loading: false })
@@ -104,13 +104,13 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   fetchGastos: async (userId: string) => {
     try {
       set({ loading: true, error: null })
-      const gastosCol = collection(db, 'gastos')
+      const gastosCol = collection(requireDb(), 'gastos')
       const q = query(gastosCol, where('userId', '==', userId), orderBy('fecha', 'desc'))
       const snap = await getDocs(q)
-      const gastos: Gasto[] = snap.docs.map((d) => ({ id: d.id, ...(d.data() as any) }))
+      const gastos: Gasto[] = snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Gasto, 'id'>) }))
       set({ gastos })
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al obtener gastos' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al obtener gastos' })
     } finally {
       set({ loading: false })
     }
@@ -119,14 +119,14 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   createGasto: async (gasto: Omit<Gasto, 'id'>) => {
     try {
       set({ loading: true, error: null })
-      const gastosCol = collection(db, 'gastos')
+      const gastosCol = collection(requireDb(), 'gastos')
       const toSave = { ...gasto, createdAt: serverTimestamp() }
       const ref = await addDoc(gastosCol, toSave)
       const id = ref.id
       set((state) => ({ gastos: [{ id, ...gasto } as Gasto, ...state.gastos] }))
       return id
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al crear gasto' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al crear gasto' })
       throw error
     } finally {
       set({ loading: false })
@@ -136,11 +136,11 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   updateGasto: async (id: string, gasto: Partial<Gasto>) => {
     try {
       set({ loading: true, error: null })
-      const ref = doc(db, 'gastos', id)
+      const ref = doc(requireDb(), 'gastos', id)
       await updateDoc(ref, { ...gasto })
       set((state) => ({ gastos: state.gastos.map((g) => (g.id === id ? { ...g, ...gasto } : g)) }))
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al actualizar gasto' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al actualizar gasto' })
       throw error
     } finally {
       set({ loading: false })
@@ -150,11 +150,11 @@ export const useFinanceStore = create<FinanceState>((set) => ({
   deleteGasto: async (id: string) => {
     try {
       set({ loading: true, error: null })
-      const ref = doc(db, 'gastos', id)
+      const ref = doc(requireDb(), 'gastos', id)
       await deleteDoc(ref)
       set((state) => ({ gastos: state.gastos.filter((g) => g.id !== id) }))
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al eliminar gasto' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al eliminar gasto' })
       throw error
     } finally {
       set({ loading: false })

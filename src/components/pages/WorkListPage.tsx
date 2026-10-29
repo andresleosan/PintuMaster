@@ -101,8 +101,8 @@ export const WorkListPage: React.FC = () => {
       width: '120px',
       render: (value: string) => {
         const statusMap: Record<string, string> = { 'Pendiente': 'Pendiente', 'En proceso': 'En Proceso', 'Pintura': 'Pintando', 'Terminado': 'Completado' }
-        const variantMap: Record<string, string> = { 'Pendiente': 'pending', 'En proceso': 'process', 'Pintura': 'painting', 'Terminado': 'done' }
-        return <Badge label={statusMap[value] ?? value} variant={(variantMap[value] ?? 'pending') as any} />
+        const variantMap: Record<string, 'pending' | 'process' | 'painting' | 'done'> = { 'Pendiente': 'pending', 'En proceso': 'process', 'Pintura': 'painting', 'Terminado': 'done' }
+        return <Badge label={statusMap[value] ?? value} variant={variantMap[value] ?? 'pending'} />
       },
     },
     {

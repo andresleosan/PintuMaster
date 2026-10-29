@@ -98,12 +98,12 @@ export const WorkDetailPage: React.FC = () => {
                     }[work.estado]
                   }
                   variant={
-                    {
+                    ({
                       Pendiente: 'pending',
                       'En proceso': 'process',
                       Pintura: 'painting',
                       Terminado: 'done',
-                    }[work.estado] as any
+                    } as const)[work.estado]
                   }
                 />
               </div>

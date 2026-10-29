@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { db } from '@/services/firebase'
+import { requireDb } from '@/services/firebase'
 import {
   collection,
   getDocs,
@@ -14,8 +14,8 @@ import {
 } from 'firebase/firestore'
 import { Ingreso, Gasto } from '@/types/models'
 
-const ingresosCol = collection(db, 'ingresos')
-const gastosCol = collection(db, 'gastos')
+const ingresosCol = collection(requireDb(), 'ingresos')
+const gastosCol = collection(requireDb(), 'gastos')
 
 export function useIngresos(userId: string | undefined) {
   return useQuery({
@@ -59,7 +59,7 @@ export function useUpdateIngreso() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Ingreso> }) => {
-      const ref = doc(db, 'ingresos', id)
+      const ref = doc(requireDb(), 'ingresos', id)
       await updateDoc(ref, data)
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['ingresos'] }),
@@ -70,7 +70,7 @@ export function useDeleteIngreso() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      const ref = doc(db, 'ingresos', id)
+      const ref = doc(requireDb(), 'ingresos', id)
       await deleteDoc(ref)
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['ingresos'] }),
@@ -93,7 +93,7 @@ export function useUpdateGasto() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Gasto> }) => {
-      const ref = doc(db, 'gastos', id)
+      const ref = doc(requireDb(), 'gastos', id)
       await updateDoc(ref, data)
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['gastos'] }),
@@ -104,7 +104,7 @@ export function useDeleteGasto() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      const ref = doc(db, 'gastos', id)
+      const ref = doc(requireDb(), 'gastos', id)
       await deleteDoc(ref)
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['gastos'] }),

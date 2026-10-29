@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({
       } else {
         await document.exitFullscreen()
       }
-    } catch (e) {
+    } catch {
       // ignore errors for browsers that block fullscreen
     }
   }

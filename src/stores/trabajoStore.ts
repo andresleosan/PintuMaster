@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { Trabajo } from '@/types/models'
-import { db } from '@/services/firebase'
+import { requireDb } from '@/services/firebase'
 import {
   collection,
   getDocs,
@@ -39,13 +39,13 @@ export const useTrabajoStore = create<TrabajoState>((set) => ({
   fetchTrabajos: async (userId: string) => {
     try {
       set({ loading: true, error: null })
-      const trabajosCol = collection(db, 'trabajos')
+      const trabajosCol = collection(requireDb(), 'trabajos')
       const q = query(trabajosCol, where('userId', '==', userId), orderBy('fechaCreacion', 'desc'))
       const snapshot = await getDocs(q)
-      const trabajos: Trabajo[] = snapshot.docs.map((d) => ({ id: d.id, ...(d.data() as any) }))
+      const trabajos: Trabajo[] = snapshot.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Trabajo, 'id'>) }))
       set({ trabajos })
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al obtener trabajos' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al obtener trabajos' })
     } finally {
       set({ loading: false })
     }
@@ -54,14 +54,14 @@ export const useTrabajoStore = create<TrabajoState>((set) => ({
   fetchTrabajoById: async (id: string) => {
     try {
       set({ loading: true, error: null })
-      const ref = doc(db, 'trabajos', id)
+      const ref = doc(requireDb(), 'trabajos', id)
       const snap = await getDoc(ref)
       if (!snap.exists()) return null
-      const trabajo = { id: snap.id, ...(snap.data() as any) } as Trabajo
+      const trabajo = { id: snap.id, ...(snap.data() as Omit<Trabajo, 'id'>) } as Trabajo
       set({ selectedTrabajo: trabajo })
       return trabajo
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al obtener trabajo' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al obtener trabajo' })
       return null
     } finally {
       set({ loading: false })
@@ -71,15 +71,15 @@ export const useTrabajoStore = create<TrabajoState>((set) => ({
   createTrabajo: async (trabajo: Omit<Trabajo, 'id'>) => {
     try {
       set({ loading: true, error: null })
-      const trabajosCol = collection(db, 'trabajos')
+      const trabajosCol = collection(requireDb(), 'trabajos')
       const toSave = { ...trabajo, fechaCreacion: serverTimestamp() }
       const docRef = await addDoc(trabajosCol, toSave)
       const id = docRef.id
       // optional: update local state
       set((state) => ({ trabajos: [{ id, ...trabajo } as Trabajo, ...state.trabajos] }))
       return id
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al crear trabajo' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al crear trabajo' })
       throw error
     } finally {
       set({ loading: false })
@@ -89,14 +89,14 @@ export const useTrabajoStore = create<TrabajoState>((set) => ({
   updateTrabajo: async (id: string, trabajo: Partial<Trabajo>) => {
     try {
       set({ loading: true, error: null })
-      const ref = doc(db, 'trabajos', id)
+      const ref = doc(requireDb(), 'trabajos', id)
       await updateDoc(ref, { ...trabajo })
       set((state) => ({
         trabajos: state.trabajos.map((t) => (t.id === id ? { ...t, ...trabajo } : t)),
         selectedTrabajo: state.selectedTrabajo?.id === id ? { ...state.selectedTrabajo, ...trabajo } : state.selectedTrabajo,
       }))
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al actualizar trabajo' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al actualizar trabajo' })
       throw error
     } finally {
       set({ loading: false })
@@ -106,11 +106,11 @@ export const useTrabajoStore = create<TrabajoState>((set) => ({
   deleteTrabajo: async (id: string) => {
     try {
       set({ loading: true, error: null })
-      const ref = doc(db, 'trabajos', id)
+      const ref = doc(requireDb(), 'trabajos', id)
       await deleteDoc(ref)
       set((state) => ({ trabajos: state.trabajos.filter((t) => t.id !== id), selectedTrabajo: state.selectedTrabajo?.id === id ? null : state.selectedTrabajo }))
-    } catch (error: any) {
-      set({ error: error?.message || 'Error al eliminar trabajo' })
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : 'Error al eliminar trabajo' })
       throw error
     } finally {
       set({ loading: false })

@@ -1,48 +1,57 @@
-# Dependencies
-node_modules/
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# Base de 1 Titán — Cronos la completa con lo específico del stack elegido (STACK.md).
 
-# Production
-dist/
-build/
-.next/
-out/
-
-# Environment variables
+# Secretos y credenciales — nunca deben llegar al repo
 .env
-.env.local
-.env.*.local
-.env.production
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.cer
+secrets/
+credentials/
 
-# Firebase
+# Google Cloud / Firebase / Apps Script
+*-firebase-adminsdk-*.json
+serviceAccountKey.json
+.clasprc.json
 .firebase/
-.firebaserc
 firebase-debug.log
 
-# IDE & Editor
+# Dependencias e instalación
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Builds y artefactos
+dist/
+build/
+out/
+*.log
+coverage/
+
+# Reportes de QA (browser-qa-e2e, v3.3.0) — se regeneran en cada corrida, no se versionan
+qa/reports/
+playwright-report/
+test-results/
+
+# Editor / sistema operativo
+.DS_Store
 .vscode/
 .idea/
-*.swp
-*.swo
-*~
-.DS_Store
+Thumbs.db
 
-# Testing
-coverage/
-.nyc_output/
+# Bases de datos locales
+*.sqlite3
+*.db
 
-# Misc
-*.log
-*.pem
+# Backups que dejan los scripts de la agencia al actualizar
+*.bak-*
 
-# Secret files
-secrets.json
-.env.production.local
-
-# Temporary files
-tmp/
-temp/
-
-# Note: maquetas/*.html are NOT ignored - they're part of the project documentation
+# Local configuration and generated build state
+!.env.*.example
+*serviceAccount*.json
+*.tsbuildinfo

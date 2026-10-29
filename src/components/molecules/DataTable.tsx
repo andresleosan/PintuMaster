@@ -6,7 +6,7 @@ export interface ColumnDef<T> {
   sortable?: boolean
   width?: string
   mobileHidden?: boolean
-  render?: (value: any, row: T) => React.ReactNode
+  render?(value: T[keyof T], row: T): React.ReactNode
 }
 
 interface DataTableProps<T> {
@@ -19,8 +19,7 @@ interface DataTableProps<T> {
   showPagination?: boolean
 }
 
-export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
-  function DataTable(
+function DataTableInner<T extends object>(
     {
       columns,
       data,
@@ -29,10 +28,10 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
       emptyMessage = 'No hay datos disponibles',
       itemsPerPage = 10,
       showPagination = true,
-    },
-    ref
+    }: DataTableProps<T>,
+    ref: React.ForwardedRef<HTMLDivElement>
   ) {
-    const [sortKey, setSortKey] = useState<string | null>(null)
+    const [sortKey, setSortKey] = useState<keyof T | null>(null)
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
     const [currentPage, setCurrentPage] = useState(1)
 
@@ -57,7 +56,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
       return sortedData.slice(start, start + itemsPerPage)
     }, [sortedData, currentPage, itemsPerPage])
 
-    const handleSort = React.useCallback((colKey: string) => {
+    const handleSort = React.useCallback((colKey: keyof T) => {
       setSortKey((prev) => {
         setSortOrder((prevOrder) => prev === colKey ? (prevOrder === 'asc' ? 'desc' : 'asc') : 'asc')
         return colKey
@@ -70,26 +69,6 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
       actionCols: columns.filter((c) => c.mobileHidden && c.label !== ''),
       visibleMobileCols: columns.filter((c) => !c.mobileHidden),
     }), [columns])
-
-    if (isLoading) {
-      return (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin">
-            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          </div>
-        </div>
-      )
-    }
-
-    if (data.length === 0) {
-      return (
-        <div className="text-center py-12">
-          <p className="text-gray-500">{emptyMessage}</p>
-        </div>
-      )
-    }
 
     const handlePageChange = React.useCallback((page: number) => {
       setCurrentPage(page)
@@ -138,6 +117,26 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
         </div>
       </div>
     ), [showPagination, totalPages, currentPage, itemsPerPage, sortedData.length, handlePageChange])
+
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin">
+            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          </div>
+        </div>
+      )
+    }
+
+    if (data.length === 0) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-gray-500">{emptyMessage}</p>
+        </div>
+      )
+    }
 
     return (
       <div ref={ref} className="rounded-lg border border-gray-200 bg-white">
@@ -193,7 +192,7 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
                     className={`px-6 py-3 text-left font-semibold text-gray-700 ${
                       col.sortable ? 'cursor-pointer hover:bg-gray-100' : ''
                     }`}
-                    onClick={() => col.sortable && handleSort(String(col.key))}
+                    onClick={() => col.sortable && handleSort(col.key)}
                   >
                     <div className="flex items-center gap-2">
                       <span>{col.label}</span>
@@ -237,7 +236,8 @@ export const DataTable = React.forwardRef<HTMLDivElement, DataTableProps<any>>(
       </div>
     )
   }
-)
 
-DataTable.displayName = 'DataTable'
+export const DataTable = React.forwardRef(DataTableInner) as <T extends object>(
+  props: DataTableProps<T> & React.RefAttributes<HTMLDivElement>
+) => React.ReactElement
 export default DataTable

@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { auth } from '@/services/firebase'
-// @ts-ignore
+import { auth, requireAuth } from '@/services/firebase'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -40,14 +39,14 @@ export const useAuthStore = create<AuthState>()(
       signup: async (email: string, password: string) => {
         try {
           set({ loading: true, error: null })
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+          const userCredential = await createUserWithEmailAndPassword(requireAuth(), email, password)
           const firebaseUser = userCredential.user
           set({
             user: { uid: firebaseUser.uid, email: firebaseUser.email || '' },
             loading: false
           })
-        } catch (error: any) {
-          const errorMessage = error?.message || 'Signup failed'
+        } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : 'Signup failed'
           set({ error: errorMessage, loading: false })
           throw error
         }
@@ -56,14 +55,14 @@ export const useAuthStore = create<AuthState>()(
       login: async (email: string, password: string) => {
         try {
           set({ loading: true, error: null })
-          const userCredential = await signInWithEmailAndPassword(auth, email, password)
+          const userCredential = await signInWithEmailAndPassword(requireAuth(), email, password)
           const firebaseUser = userCredential.user
           set({
             user: { uid: firebaseUser.uid, email: firebaseUser.email || '' },
             loading: false
           })
-        } catch (error: any) {
-          const errorMessage = error?.message || 'Login failed'
+        } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : 'Login failed'
           set({ error: errorMessage, loading: false })
           throw error
         }
@@ -72,10 +71,10 @@ export const useAuthStore = create<AuthState>()(
       logout: async () => {
         try {
           set({ loading: true, error: null })
-          await signOut(auth)
+          await signOut(requireAuth())
           set({ user: null, loading: false })
-        } catch (error: any) {
-          const errorMessage = error?.message || 'Logout failed'
+        } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : 'Logout failed'
           set({ error: errorMessage, loading: false })
           throw error
         }
